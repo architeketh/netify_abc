@@ -4,14 +4,16 @@
 
 export const DEPOP_SHOP_URL = 'https://www.depop.com/architek/'
 
-export type Era = "70s" | "80s" | "90s" | "Y2K"
+// Set each listing's verified brand; use Other for unverified or unlisted brands.
+export const BRANDS = ['adidas', 'Nike', 'Converse', 'New Balance', 'Reebok', 'Other'] as const
+export type Brand = (typeof BRANDS)[number]
 export type Category = 'Basketball' | 'Running' | 'Skate' | 'Court' | 'Trail'
 
 export interface Product {
   id: string
   name: string
   colorway: string
-  era: Era
+  brand: Brand
   year: string
   category: Category
   size: string // US men's
@@ -31,7 +33,7 @@ const products: Array<Product> = [
     id: 'court-king-hi',
     name: 'Court King Hi',
     colorway: 'White / Royal',
-    era: '80s',
+    brand: 'Other',
     year: '1986',
     category: 'Basketball',
     size: '10',
@@ -49,7 +51,7 @@ const products: Array<Product> = [
     id: 'volt-runner-97',
     name: 'Volt Runner',
     colorway: 'Graphite / Neon',
-    era: '90s',
+    brand: 'Other',
     year: '1997',
     category: 'Running',
     size: '9.5',
@@ -67,7 +69,7 @@ const products: Array<Product> = [
     id: 'burnt-sienna-skate',
     name: 'Sienna Skate Low',
     colorway: 'Burnt Orange / Gum',
-    era: '90s',
+    brand: 'Other',
     year: '1994',
     category: 'Skate',
     size: '9',
@@ -84,7 +86,7 @@ const products: Array<Product> = [
     id: 'ridge-trail-88',
     name: 'Ridge Trail',
     colorway: 'Olive / Plum / Bark',
-    era: '80s',
+    brand: 'Other',
     year: '1988',
     category: 'Trail',
     size: '11',
@@ -102,7 +104,7 @@ const products: Array<Product> = [
     id: 'bred-hi-85',
     name: 'Hardwood Hi',
     colorway: 'Black / Varsity Red',
-    era: '80s',
+    brand: 'Other',
     year: '1985',
     category: 'Basketball',
     size: '10.5',
@@ -120,7 +122,7 @@ const products: Array<Product> = [
     id: 'sky-racer-79',
     name: 'Sky Racer',
     colorway: 'Sky Blue / White',
-    era: '70s',
+    brand: 'Other',
     year: '1979',
     category: 'Running',
     size: '8.5',
@@ -137,7 +139,7 @@ const products: Array<Product> = [
     id: 'clay-court-classic',
     name: 'Clay Court Classic',
     colorway: 'Chalk / Forest',
-    era: '80s',
+    brand: 'Other',
     year: '1983',
     category: 'Court',
     size: '9',
@@ -154,7 +156,7 @@ const products: Array<Product> = [
     id: 'pastel-dad-99',
     name: 'Sorbet Dad',
     colorway: 'Lilac / Mint / Cream',
-    era: 'Y2K',
+    brand: 'Other',
     year: '1999',
     category: 'Running',
     size: '7.5',

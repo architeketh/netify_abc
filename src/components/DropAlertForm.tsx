@@ -1,17 +1,17 @@
 import { useState, type FormEvent } from 'react'
 import { Check, Loader2 } from 'lucide-react'
+import { BRANDS, type Brand } from '@/data/products.ts'
 
 type State = 'idle' | 'pending' | 'success' | 'error'
 
 const SIZES = ['6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '13']
-const ERAS = ['70s', '80s', '90s', 'Y2K']
 
 export function DropAlertForm() {
   const [state, setState] = useState<State>('idle')
-  const [eras, setEras] = useState<Array<string>>([])
+  const [brands, setBrands] = useState<Array<Brand>>([])
 
-  function toggleEra(era: string) {
-    setEras((prev) => (prev.includes(era) ? prev.filter((e) => e !== era) : [...prev, era]))
+  function toggleBrand(brand: Brand) {
+    setBrands((prev) => (prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]))
     if (state !== 'pending') setState('idle')
   }
 
@@ -67,7 +67,7 @@ export function DropAlertForm() {
       className="space-y-5"
     >
       <input type="hidden" name="form-name" value="drop-alerts" />
-      <input type="hidden" name="eras" value={eras.join(', ')} />
+      <input type="hidden" name="eras" value={brands.join(', ')} />
       <p hidden>
         <label>
           Leave empty
@@ -109,22 +109,22 @@ export function DropAlertForm() {
 
         <div>
           <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-paper/70">
-            Eras you're hunting
+            Brands you're hunting
           </span>
           <div className="flex flex-wrap gap-2">
-            {ERAS.map((era) => {
-              const on = eras.includes(era)
+            {BRANDS.map((brand) => {
+              const on = brands.includes(brand)
               return (
                 <button
-                  key={era}
+                  key={brand}
                   type="button"
                   aria-pressed={on}
-                  onClick={() => toggleEra(era)}
+                  onClick={() => toggleBrand(brand)}
                   className={`rounded-full border-2 px-4 py-1.5 text-sm font-bold uppercase transition ${
                     on ? 'border-signal bg-signal text-paper' : 'border-paper/60 hover:border-paper'
                   }`}
                 >
-                  {era}
+                  {brand}
                 </button>
               )
             })}

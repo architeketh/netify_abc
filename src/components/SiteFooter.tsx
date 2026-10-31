@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
-import { DEPOP_SHOP_URL } from '@/data/products'
+import { DEPOP_SHOP_URL } from '@/data/products.ts'
 
 export function SiteFooter() {
   return (

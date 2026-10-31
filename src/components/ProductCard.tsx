@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowUpRight } from 'lucide-react'
-import type { Product } from '@/data/products'
+import type { Product } from '@/data/products.ts'
 import { ConditionMeter } from '@/components/ConditionMeter'
 import { cdn, srcSet } from '@/lib/img'
 
@@ -51,6 +51,7 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
             </span>
           </div>
           <h3 className="font-display mt-3 text-3xl">{product.name}</h3>
+          <p className="mt-1 font-mono text-xs uppercase text-ink/60">{product.brand}</p>
           <p className="mt-1 text-sm text-ink/70">{product.colorway}</p>
           <ConditionMeter score={product.conditionScore} className="mt-4" />
           <div className="mt-4 flex items-end justify-between">
