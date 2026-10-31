@@ -1,9 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 'lucide-react'
-import products, { BRANDS, CONDITIONS, DEPOP_SHOP_URL, type Brand } from '@/data/products.ts'
+import products, { BRANDS, CONDITIONS, DEPOP_SHOP_URL, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
 import { DropAlertForm } from '@/components/DropAlertForm'
+import { sizeShort } from '@/lib/size'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -19,11 +20,13 @@ type Sort = 'featured' | 'price-asc' | 'price-desc' | 'condition'
 const TICKER = [
   'Hand-picked vintage',
   'Cleaned & graded',
-  'Ships in 48h',
+  'Ships in 24h',
   'Vintage + new',
   'One of one',
   'Honest condition labels',
 ]
+
+const sizeKey = (p: Product) => `${p.sizeType}|${p.size}`
 
 function Home() {
   // Main photo: the first pair for sale. To use your own photo instead, replace this with '/img/hero.png'.
@@ -32,14 +35,25 @@ function Home() {
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
 
-  const sizes = useMemo(
-    () => [...new Set(products.map((p) => p.size))].sort((a, b) => +a - +b),
-    [],
-  )
+  // One entry per size and who it is for, e.g. M 9, W 9, Kids 12
+  const sizes = useMemo(() => {
+    const seen = new Map<string, Product>()
+    products.forEach((p) => {
+      const key = sizeKey(p)
+      if (!seen.has(key)) seen.set(key, p)
+    })
+    return [...seen.entries()]
+      .sort(
+        ([, a], [, b]) =>
+          SIZE_TYPES.indexOf(a.sizeType) - SIZE_TYPES.indexOf(b.sizeType) ||
+          (parseFloat(a.size) || 0) - (parseFloat(b.size) || 0),
+      )
+      .map(([key, p]) => ({ key, label: sizeShort(p) }))
+  }, [])
 
   const visible = useMemo(() => {
     const list = products.filter(
-      (p) => (brand === 'all' || p.brand === brand) && (size === 'all' || p.size === size),
+      (p) => (brand === 'all' || p.brand === brand) && (size === 'all' || sizeKey(p) === size),
     )
     const sorted = [...list]
     if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price)
@@ -151,8 +165,8 @@ function Home() {
               >
                 <option value="all">All</option>
                 {sizes.map((s) => (
-                  <option key={s} value={s}>
-                    US {s}
+                  <option key={s.key} value={s.key}>
+                    {s.label}
                   </option>
                 ))}
               </select>
@@ -242,7 +256,7 @@ function Home() {
         <div className="marquee marquee-reverse">
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1}>
-              {['Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street', 'Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street'].map((t, i) => (
+              {['Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street', 'Boots', 'Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street', 'Boots'].map((t, i) => (
                 <span key={i} className="font-display px-6 text-5xl">
                   {i % 2 === 0 ? t : <span className="text-outline [-webkit-text-stroke-color:var(--color-paper)]">{t}</span>}
                 </span>
@@ -288,7 +302,7 @@ function Home() {
           {[
             { icon: Search, title: 'Sourced by hand', copy: 'Thrift bins, estate sales, old stockrooms. We dig so you don’t have to.' },
             { icon: ShieldCheck, title: 'Checked & cleaned', copy: 'Authenticity checks, deep clean, and fresh laces where needed.' },
-            { icon: Package, title: 'Bought safely on Depop', copy: 'Checkout through Depop with buyer protection. Ships within 48 hours.' },
+            { icon: Package, title: 'Bought safely on Depop', copy: 'Checkout through Depop with buyer protection. Ships within 24 hours.' },
           ].map(({ icon: Icon, title, copy }, i) => (
             <div key={title} className="border-2 border-ink bg-paper p-6 shadow-[6px_6px_0_var(--color-ink)]">
               <div className="flex items-center justify-between">
