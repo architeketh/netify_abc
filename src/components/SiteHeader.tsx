@@ -3,6 +3,31 @@ import { Link, useLocation } from '@tanstack/react-router'
 import { ArrowUpRight } from 'lucide-react'
 import { DEPOP_SHOP_URL } from '@/data/products.ts'
 
+// Small round mark in the colors of the ABC is for XYZ logo
+function LogoMark() {
+  return (
+    <svg viewBox="0 0 100 100" className="size-9 shrink-0" aria-hidden="true">
+      <defs>
+        <clipPath id="logo-circle">
+          <circle cx="50" cy="50" r="49" />
+        </clipPath>
+      </defs>
+      <g clipPath="url(#logo-circle)">
+        <rect x="0" y="0" width="27" height="40" fill="#8f4f1d" />
+        <rect x="27" y="0" width="24" height="40" fill="#ffd95a" />
+        <rect x="51" y="0" width="22" height="40" fill="#08bfe0" />
+        <rect x="73" y="0" width="27" height="40" fill="#476614" />
+        <rect x="0" y="60" width="27" height="40" fill="#08bfe0" />
+        <rect x="27" y="60" width="24" height="40" fill="#be8ae8" />
+        <rect x="51" y="60" width="22" height="40" fill="#e1502f" />
+        <rect x="73" y="60" width="27" height="40" fill="#8f4f1d" />
+        <rect x="0" y="40" width="100" height="20" fill="#fffaf0" />
+      </g>
+      <circle cx="50" cy="50" r="49" fill="none" stroke="#140d08" strokeWidth="2" />
+    </svg>
+  )
+}
+
 export function SiteHeader() {
   const { pathname } = useLocation()
   const onHome = pathname === '/'
@@ -25,10 +50,15 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b-2 border-ink bg-paper/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" onClick={toTop} className="group flex items-baseline gap-2">
-          <span className="font-display text-3xl">Architek</span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-ink/60 sm:inline">
-            Vintage sneaker archive
+        <Link to="/" onClick={toTop} className="group flex items-center gap-3">
+          <LogoMark />
+          <span className="flex items-baseline gap-1.5">
+            <span className="font-display text-2xl sm:text-3xl">ABC</span>
+            <span className="text-xs font-medium italic sm:text-sm">is for</span>
+            <span className="font-display text-2xl sm:text-3xl">XYZ</span>
+          </span>
+          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-ink/60 xl:inline">
+            A–Z curated vintage + modern finds • Built for repeat buyers
           </span>
         </Link>
         <nav className="flex items-center gap-1 text-sm font-bold uppercase sm:gap-2">
