@@ -188,7 +188,7 @@ function Home() {
         </div>
 
         {/* Brand filters */}
-        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-4" role="group" aria-label="Filter by brand">
+        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-5" role="group" aria-label="Filter by brand">
           {BRAND_FILTERS.map((e) => {
             const active = brand === e.id
             const count =
