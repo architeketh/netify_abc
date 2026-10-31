@@ -40,7 +40,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 26.25,
-    image: '/img/adidas-daily-40-casual-sport-f3d0.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060359201_869a95a8588349bb9016807819b471b4/P1.jpg',
     description:
       '',
     details: [],
@@ -58,7 +58,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 24.43,
-    image: '/img/nike-waffle-debut-stadium-green-ed6b.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5078522007_f543537d2a3b431d91f9313ee2cad62a/P1.jpg',
     description:
       '',
     details: [],
@@ -75,7 +75,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 69.9,
-    image: '/img/nike-dunk-low-womens-size-cbea.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060366052_917439ce90d142f381441e96c721f09e/P1.jpg',
     description:
       '',
     details: [],
@@ -93,7 +93,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 22.05,
-    image: '/img/lightweight-athletic-shoes-with-breathable-0d19.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060341914_b35266006e92408b85f92ae651f762df/P1.jpg',
     description:
       '',
     details: [],
@@ -110,7 +110,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 31.19,
-    image: '/img/puma-suede-xl-in-putty-60a3.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060419325_767aff57754a430dab6c897a71bc0b5b/P1.jpg',
     description:
       '',
     details: [],
@@ -128,7 +128,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 22.05,
-    image: '/img/converse-one-star-ox-ash-f595.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060345156_52f56a400d2a47c3987a6a7e3c9012bc/P1.jpg',
     description:
       '',
     details: [],
@@ -145,7 +145,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 27.93,
-    image: '/img/converse-bosey-mc-high-top-f882.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060372757_c6ea8b37f07340fd82499cc3beb67752/P1.jpg',
     description:
       '',
     details: [],
@@ -162,7 +162,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 49.4,
-    image: '/img/adidas-superstar-ii-snake-print-03a8.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060371204_2c875714fba343e29b82506f8fb3c8ba/P1.jpg',
     description:
       '',
     details: [],
@@ -179,7 +179,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 35.69,
-    image: '/img/adidas-gazelle-indoor-w-ih6801-4b44.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5025175981_0cd8d3d4af2d40a7903f4e8c222ad52d/P1.jpg',
     description:
       '',
     details: [],
@@ -197,7 +197,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 13.99,
-    image: '/img/capelli-new-york-rbt-4519-black-c7cc.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060411516_34a1eb2b029c40cfb217099a0277b28a/P1.jpg',
     description:
       '',
     details: [],
@@ -214,7 +214,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 22.39,
-    image: '/img/hunter-org-kids-first-gl-8d73.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5072859575_dc267667cc744c81a4706f274da67072/P1.jpg',
     description:
       '',
     details: [],
@@ -231,7 +231,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 49.5,
-    image: '/img/regarde-le-ciel-cristion-01-89f9.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060415115_d53d17bf87844f72887f5bbb2b5d27f3/P1.jpg',
     description:
       '',
     details: [],
@@ -248,7 +248,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 27.29,
-    image: '/img/cougar-cardiff-boots-n-q-black-88f9.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060398383_aee66213764746048734b0a971ce74d8/P1.jpg',
     description:
       '',
     details: [],
@@ -265,7 +265,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 20.99,
-    image: '/img/easy-spirit-adagio-size-85-b0a6.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060424313_3ec3928697ae4191baf99eedcc957f50/P1.jpg',
     description:
       '',
     details: [],
@@ -282,7 +282,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 34.23,
-    image: '/img/cushionaire-hippy-cozy-platform-b303.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060361374_d1abb9f4d1a64670ae667d0afb3bef4b/P1.jpg',
     description:
       '',
     details: [],
@@ -299,7 +299,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 34.23,
-    image: '/img/timberland-pro-a91160-sawhorse-work-6d22.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060406438_fb85294fc2664834b3be15498edbc313/P1.jpg',
     description:
       '',
     details: [],
@@ -316,7 +316,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 14.59,
-    image: '/img/ugg-kids-canoe-waterproof-1105181k-49fd.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060382202_20f3a1e05b364646b4efc684cf3c01af/P1.jpg',
     description:
       '',
     details: [],
@@ -333,7 +333,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 14.24,
-    image: '/img/native-jefferson-slip-on-womens-7770.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/4896113554_dbcc195713a844b7b242a0983f5d18fc/P1.jpg',
     description:
       '',
     details: [],
@@ -350,7 +350,7 @@ const products: Array<Product> = [
     condition: '',
     conditionScore: 7,
     price: 14,
-    image: '/img/reebok-classic-leather-size-12y-6c76.jpg',
+    image: 'https://media-photos.depop.com/b1/463666447/5060426461_01ff1297c5ef4daa9689eb38e6f4a392/P1.jpg',
     description:
       '',
     details: [],
