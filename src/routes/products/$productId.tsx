@@ -147,7 +147,7 @@ function ProductPage() {
               rel="noreferrer"
               className="group mt-8 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-3 font-display text-lg text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
             >
-              Cop it on Depop
+              Buy it on Depop
               <ArrowUpRight className="size-5 transition group-hover:rotate-45" />
             </a>
           )}
