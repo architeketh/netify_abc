@@ -115,19 +115,13 @@ function Home() {
                 Fig. 01 — Curated A to Z
               </p>
             </div>
-            <div className="spin-slow absolute -left-6 -top-8 grid size-32 place-items-center rounded-full border-2 border-ink bg-volt sm:-left-10 sm:size-36">
-              <svg viewBox="0 0 100 100" className="absolute inset-0 size-full">
-                <defs>
-                  <path id="circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
-                </defs>
-                <text className="font-mono text-[9.5px] font-bold uppercase tracking-[0.2em]">
-                  <textPath href="#circle" textLength="232" lengthAdjust="spacing">
-                    Inspected by ABC is for XYZ ·
-                  </textPath>
-                </text>
-              </svg>
-              <span className="font-display text-3xl">A–Z</span>
-            </div>
+            <img
+              src="/img/logo.png"
+              alt="ABC is for XYZ logo"
+              width={480}
+              height={480}
+              className="spin-slow absolute -left-6 -top-8 size-32 rounded-full sm:-left-10 sm:size-36"
+            />
           </div>
         </div>
       </section>
