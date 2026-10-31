@@ -242,7 +242,7 @@ function Home() {
         <div className="marquee marquee-reverse">
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1}>
-              {['Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Basketball', 'Running', 'Skate', 'Court', 'Trail'].map((t, i) => (
+              {['Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street', 'Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street'].map((t, i) => (
                 <span key={i} className="font-display px-6 text-5xl">
                   {i % 2 === 0 ? t : <span className="text-outline [-webkit-text-stroke-color:var(--color-paper)]">{t}</span>}
                 </span>
