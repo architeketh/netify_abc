@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 'lucide-react'
-import products, { DEPOP_SHOP_URL, type Era } from '@/data/products'
+import products, { BRANDS, DEPOP_SHOP_URL, type Brand } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
 import { DropAlertForm } from '@/components/DropAlertForm'
 import { cdn, srcSet } from '@/lib/img'
@@ -10,12 +10,9 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 
-const ERAS: Array<{ id: Era | 'all'; label: string; blurb: string }> = [
-  { id: 'all', label: 'All eras', blurb: 'The full archive' },
-  { id: '70s', label: '70s', blurb: 'Nylon, suede & waffle soles' },
-  { id: '80s', label: '80s', blurb: 'Hardwood high-tops' },
-  { id: '90s', label: '90s', blurb: 'Air, neon & skate' },
-  { id: 'Y2K', label: 'Y2K', blurb: 'Chunky & pastel' },
+const BRAND_FILTERS: Array<{ id: Brand | 'all'; label: string }> = [
+  { id: 'all', label: 'All brands' },
+  ...BRANDS.map((brand) => ({ id: brand, label: brand })),
 ]
 
 type Sort = 'featured' | 'price-asc' | 'price-desc' | 'oldest' | 'condition'
@@ -30,7 +27,7 @@ const TICKER = [
 ]
 
 function Home() {
-  const [era, setEra] = useState<Era | 'all'>('all')
+  const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
 
@@ -41,7 +38,7 @@ function Home() {
 
   const visible = useMemo(() => {
     const list = products.filter(
-      (p) => (era === 'all' || p.era === era) && (size === 'all' || p.size === size),
+      (p) => (brand === 'all' || p.brand === brand) && (size === 'all' || p.size === size),
     )
     const sorted = [...list]
     if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price)
@@ -49,7 +46,7 @@ function Home() {
     if (sort === 'oldest') sorted.sort((a, b) => +a.year - +b.year)
     if (sort === 'condition') sorted.sort((a, b) => b.conditionScore - a.conditionScore)
     return sorted
-  }, [era, size, sort])
+  }, [brand, size, sort])
 
   return (
     <>
@@ -175,26 +172,23 @@ function Home() {
           </div>
         </div>
 
-        {/* Era timeline */}
-        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-5" role="tablist">
-          {ERAS.map((e, i) => {
-            const active = era === e.id
+        {/* Brand filters */}
+        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-3 lg:grid-cols-7" role="group" aria-label="Filter by brand">
+          {BRAND_FILTERS.map((e, i) => {
+            const active = brand === e.id
             const count =
-              e.id === 'all' ? products.length : products.filter((p) => p.era === e.id).length
+              e.id === 'all' ? products.length : products.filter((p) => p.brand === e.id).length
             return (
               <button
                 key={e.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setEra(e.id)}
-                className={`group relative flex flex-col items-start gap-1 p-4 text-left transition ${
-                  i === 0 ? 'col-span-2 sm:col-span-1' : ''
+                type="button"
+                aria-pressed={active}
+                onClick={() => setBrand(e.id)}
+                className={`group relative flex flex-col items-start gap-1 p-4 pt-8 text-left transition ${
+                  i === 0 ? 'col-span-2 sm:col-span-3 lg:col-span-1' : ''
                 } ${active ? 'bg-ink text-paper' : 'bg-paper hover:bg-paper-deep'}`}
               >
-                <span className="font-display text-4xl">{e.label}</span>
-                <span className={`text-xs ${active ? 'text-paper/70' : 'text-ink/60'}`}>
-                  {e.blurb}
-                </span>
+                <span className="font-display text-3xl">{e.label}</span>
                 <span
                   className={`absolute right-3 top-3 font-mono text-xs ${active ? 'text-volt' : 'text-ink/50'}`}
                 >
@@ -218,7 +212,7 @@ function Home() {
         ) : (
           <div className="mt-12 grid place-items-center border-2 border-dashed border-ink/40 px-6 py-20 text-center">
             <Search className="size-8" />
-            <p className="font-display mt-4 text-4xl">Nothing in that size — yet.</p>
+            <p className="font-display mt-4 text-4xl">No pairs match — yet.</p>
             <p className="mt-2 max-w-sm text-ink/70">
               New pairs land every week. Sign up for drop alerts and we'll ping you when your size
               shows up.
@@ -320,7 +314,7 @@ function Home() {
               <span className="text-signal">First dibs.</span>
             </h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-paper/80">
-              The good pairs go fast. Tell us your size and the eras you love, and we'll give you
+              The good pairs go fast. Tell us your size and the brands you love, and we'll give you
               a heads up before new finds hit the Depop feed. Got a grail? Tell us — we'll keep an
               eye out.
             </p>

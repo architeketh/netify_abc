@@ -1,7 +1,7 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { useState } from 'react'
 import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react'
-import products from '@/data/products'
+import products from '@/data/products.ts'
 import { ConditionMeter } from '@/components/ConditionMeter'
 import { ProductCard } from '@/components/ProductCard'
 import { cdn, srcSet } from '@/lib/img'
@@ -46,7 +46,7 @@ function ProductPage() {
   const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null)
 
   const related = products
-    .filter((p) => p.id !== product.id && (p.era === product.era || p.category === product.category))
+    .filter((p) => p.id !== product.id && (p.brand === product.brand || p.category === product.category))
     .slice(0, 4)
 
   return (
@@ -91,7 +91,7 @@ function ProductPage() {
           <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink/60">
             <span className="tag-hole">{catalogNo}</span>
             <span>
-              {product.era} · {product.category}
+              {product.brand} · {product.category}
             </span>
           </div>
           <h1 className="font-display mt-4 text-7xl sm:text-8xl">{product.name}</h1>
