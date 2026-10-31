@@ -20,7 +20,7 @@ export const Route = createFileRoute('/products/$productId')({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.name} (${loaderData.year}) — Architek` },
+          { title: `${loaderData.name} — Architek` },
           { name: 'description', content: loaderData.description },
           { property: 'og:image', content: isRemote(loaderData.image) ? loaderData.image : cdn(loaderData.image, 1200) },
         ]
@@ -112,21 +112,17 @@ function ProductPage() {
           <dl className="mt-6 grid grid-cols-2 border-2 border-ink">
             {[
                       ['Size', `US ${product.size}`],
-              ['Grade', `${product.conditionScore}/10`],
+              ['Condition', product.condition],
             ].map(([k, v], i) => (
               <div key={k} className={`p-3 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
                 <dt className="font-mono text-[10px] uppercase tracking-widest text-ink/60">{k}</dt>
-                <dd className="font-display mt-1 text-lg">{v}</dd>
+                <dd className="font-display mt-1 text-base">{v}</dd>
               </div>
             ))}
           </dl>
 
           <div className="mt-6">
-            <div className="mb-2 flex justify-between font-mono text-xs uppercase tracking-widest">
-              <span>Condition</span>
-              <span className="text-ink/60">{product.condition}</span>
-            </div>
-            <ConditionMeter score={product.conditionScore} />
+            <ConditionMeter condition={product.condition} showLabel={false} />
           </div>
 
           <p className="mt-6 text-sm leading-relaxed text-ink/80">{product.description}</p>
