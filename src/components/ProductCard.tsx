@@ -6,6 +6,9 @@ import { cdn, srcSet } from '@/lib/img'
 
 const tilts = ['-rotate-1', 'rotate-1', 'rotate-0', '-rotate-[0.6deg]', 'rotate-[0.8deg]']
 
+// Whole dollars show as $95, cents show as $69.90
+const formatPrice = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(2))
+
 export function ProductCard({ product, index }: { product: Product; index: number }) {
   const catalogNo = `ARC-${String(index + 1).padStart(3, '0')}`
 
@@ -50,12 +53,12 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
               {product.year} · {product.category}
             </span>
           </div>
-          <h3 className="font-display mt-3 text-3xl">{product.name}</h3>
+          <h3 className="font-display mt-3 line-clamp-2 text-2xl">{product.name}</h3>
           <p className="mt-1 font-mono text-xs uppercase text-ink/60">{product.brand}</p>
           <p className="mt-1 text-sm text-ink/70">{product.colorway}</p>
           <ConditionMeter score={product.conditionScore} className="mt-4" />
           <div className="mt-4 flex items-end justify-between">
-            <span className="font-display text-4xl">${product.price}</span>
+            <span className="font-display text-3xl">${formatPrice(product.price)}</span>
             <span className="flex items-center gap-1 text-xs font-bold uppercase opacity-0 transition group-hover:opacity-100">
               View pair <ArrowUpRight className="size-4" />
             </span>
