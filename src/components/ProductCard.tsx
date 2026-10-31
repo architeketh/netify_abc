@@ -58,7 +58,7 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
           <h3 className="mt-2 line-clamp-2 text-sm font-medium leading-snug">{product.name}</h3>
           <p className="mt-1 font-mono text-xs uppercase text-ink/60">{product.brand}</p>
           <p className="mt-1 text-sm text-ink/70">{product.colorway}</p>
-          <ConditionMeter score={product.conditionScore} className="mt-4" />
+          <ConditionMeter condition={product.condition} className="mt-4" />
           <div className="mt-4 flex items-end justify-between">
             <span className="font-display text-xl">${formatPrice(product.price)}</span>
             <span className="flex items-center gap-1 text-xs font-bold uppercase opacity-0 transition group-hover:opacity-100">

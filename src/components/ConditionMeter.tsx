@@ -1,22 +1,29 @@
+import { CONDITIONS, type Condition } from '@/data/products.ts'
+
+// 5 steps: Brand New fills all five, Used - Fair fills one.
 export function ConditionMeter({
-  score,
+  condition,
   className = '',
+  showLabel = true,
 }: {
-  score: number
+  condition: Condition
   className?: string
+  showLabel?: boolean
 }) {
+  const level = CONDITIONS.length - Math.max(0, CONDITIONS.indexOf(condition))
   return (
-    <div
-      className={`flex gap-0.5 ${className}`}
-      role="img"
-      aria-label={`Condition ${score} out of 10`}
-    >
-      {Array.from({ length: 10 }, (_, i) => (
-        <span
-          key={i}
-          className={`h-2 flex-1 border border-ink ${i < score ? 'bg-ink' : 'bg-transparent'}`}
-        />
-      ))}
+    <div className={className} role="img" aria-label={`Condition: ${condition}`}>
+      <div className="flex gap-0.5">
+        {CONDITIONS.map((c, i) => (
+          <span
+            key={c}
+            className={`h-2 flex-1 border border-ink ${i < level ? 'bg-ink' : 'bg-transparent'}`}
+          />
+        ))}
+      </div>
+      {showLabel && (
+        <p className="mt-1.5 font-mono text-[10px] uppercase tracking-widest text-ink/60">{condition}</p>
+      )}
     </div>
   )
 }
