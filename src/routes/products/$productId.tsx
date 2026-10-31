@@ -1,0 +1,171 @@
+import { Link, createFileRoute, notFound } from '@tanstack/react-router'
+import { useState } from 'react'
+import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react'
+import products from '@/data/products'
+import { ConditionMeter } from '@/components/ConditionMeter'
+import { ProductCard } from '@/components/ProductCard'
+import { cdn, srcSet } from '@/lib/img'
+
+export const Route = createFileRoute('/products/$productId')({
+  component: ProductPage,
+  loader: ({ params }) => {
+    const product = products.find((p) => p.id === params.productId)
+    if (!product) throw notFound()
+    return product
+  },
+  head: ({ loaderData }) => ({
+    meta: loaderData
+      ? [
+          { title: `${loaderData.name} (${loaderData.year}) — Architek` },
+          { name: 'description', content: loaderData.description },
+          { property: 'og:image', content: cdn(loaderData.image, 1200) },
+        ]
+      : [],
+  }),
+  notFoundComponent: () => (
+    <div className="mx-auto max-w-3xl px-4 py-32 text-center">
+      <p className="font-display text-8xl">Gone.</p>
+      <p className="mt-4 text-lg text-ink/70">
+        That pair has already walked off. Plenty more where it came from.
+      </p>
+      <Link
+        to="/"
+        hash="archive"
+        className="mt-8 inline-block border-2 border-ink bg-ink px-6 py-3 font-bold uppercase text-paper"
+      >
+        Back to the archive
+      </Link>
+    </div>
+  ),
+})
+
+function ProductPage() {
+  const product = Route.useLoaderData()
+  const index = products.indexOf(product)
+  const catalogNo = `ARC-${String(index + 1).padStart(3, '0')}`
+  const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null)
+
+  const related = products
+    .filter((p) => p.id !== product.id && (p.era === product.era || p.category === product.category))
+    .slice(0, 4)
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
+      <Link
+        to="/"
+        hash="archive"
+        className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest hover:text-signal"
+      >
+        <ArrowLeft className="size-4" /> Back to the archive
+      </Link>
+
+      <div className="mt-6 grid gap-10 lg:grid-cols-[1.1fr_1fr]">
+        <div
+          className="relative aspect-[4/5] cursor-zoom-in overflow-hidden border-2 border-ink bg-paper-deep shadow-[10px_10px_0_var(--color-ink)]"
+          onMouseMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect()
+            setZoom({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 })
+          }}
+          onMouseLeave={() => setZoom(null)}
+        >
+          <img
+            src={cdn(product.image, 1100)}
+            srcSet={srcSet(product.image, [600, 900, 1400])}
+            sizes="(min-width: 1024px) 55vw, 100vw"
+            alt={`${product.name} in ${product.colorway}`}
+            className={`h-full w-full object-cover transition-transform duration-200 ${product.sold ? 'grayscale' : ''}`}
+            style={
+              zoom
+                ? { transform: 'scale(1.8)', transformOrigin: `${zoom.x}% ${zoom.y}%` }
+                : undefined
+            }
+          />
+          {product.tag && (
+            <span className="absolute left-4 top-4 -rotate-3 border-2 border-ink bg-volt px-3 py-1 font-mono text-xs font-bold uppercase">
+              {product.tag}
+            </span>
+          )}
+        </div>
+
+        <div className="lg:pt-4">
+          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink/60">
+            <span className="tag-hole">{catalogNo}</span>
+            <span>
+              {product.era} · {product.category}
+            </span>
+          </div>
+          <h1 className="font-display mt-4 text-7xl sm:text-8xl">{product.name}</h1>
+          <p className="mt-2 text-xl text-ink/70">{product.colorway}</p>
+
+          <div className="mt-8 flex items-end gap-4">
+            <span className="font-display text-7xl">${product.price}</span>
+            <span className="mb-2 font-mono text-xs uppercase tracking-widest text-ink/60">
+              USD · via Depop
+            </span>
+          </div>
+
+          <dl className="mt-8 grid grid-cols-3 border-2 border-ink">
+            {[
+              ['Year', product.year],
+              ['Size', `US ${product.size}`],
+              ['Grade', `${product.conditionScore}/10`],
+            ].map(([k, v], i) => (
+              <div key={k} className={`p-4 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-ink/60">{k}</dt>
+                <dd className="font-display mt-1 text-3xl">{v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-6">
+            <div className="mb-2 flex justify-between font-mono text-xs uppercase tracking-widest">
+              <span>Condition</span>
+              <span className="text-ink/60">{product.condition}</span>
+            </div>
+            <ConditionMeter score={product.conditionScore} />
+          </div>
+
+          <p className="mt-8 text-lg leading-relaxed text-ink/80">{product.description}</p>
+
+          <ul className="mt-6 space-y-2">
+            {product.details.map((d) => (
+              <li key={d} className="flex items-center gap-3">
+                <Check className="size-4 text-signal" /> {d}
+              </li>
+            ))}
+          </ul>
+
+          {product.sold ? (
+            <p className="font-display mt-10 border-2 border-ink p-5 text-center text-4xl">
+              Sold — sorry!
+            </p>
+          ) : (
+            <a
+              href={product.depopUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="group mt-10 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-5 font-display text-4xl text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
+            >
+              Cop it on Depop
+              <ArrowUpRight className="size-8 transition group-hover:rotate-45" />
+            </a>
+          )}
+          <p className="mt-4 text-center font-mono text-xs uppercase tracking-widest text-ink/60">
+            Secure checkout & buyer protection through Depop
+          </p>
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <section className="mt-28">
+          <h2 className="font-display text-6xl">Also in the archive</h2>
+          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {related.map((p) => (
+              <ProductCard key={p.id} product={p} index={products.indexOf(p)} />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  )
+}
