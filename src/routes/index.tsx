@@ -1,10 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 'lucide-react'
-import products, { BRANDS, CONDITIONS, DEPOP_SHOP_URL, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
+import products, { BRANDS, CONDITIONS, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
 import { DropAlertForm } from '@/components/DropAlertForm'
 import { sizeShort } from '@/lib/size'
+
+const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
 export const Route = createFileRoute('/')({
   component: Home,
