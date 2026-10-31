@@ -26,6 +26,8 @@ const TICKER = [
 ]
 
 function Home() {
+  // The main photo is public/img/hero.png. If that file isn't there, use the photo of the first pair for sale.
+  const heroFallback = (products.find((p) => !p.sold) ?? products[0])?.image
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
@@ -89,7 +91,11 @@ function Home() {
             <div className="relative rotate-2 border-2 border-ink bg-paper p-3 pb-14 shadow-[10px_10px_0_var(--color-ink)]">
               <img
                 src="/img/hero.png"
-                alt="A pile of vintage sneakers flipped over to show their worn, yellowed outsoles"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  if (heroFallback && !e.currentTarget.src.endsWith(heroFallback)) e.currentTarget.src = heroFallback
+                }}
+                alt="Sneakers from the Architek archive"
                 className="aspect-[4/3] w-full object-cover"
                 fetchPriority="high"
               />
