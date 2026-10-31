@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
-import { DEPOP_SHOP_URL } from '@/data/products.ts'
+
+const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
 export function SiteFooter() {
   return (

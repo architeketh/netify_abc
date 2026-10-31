@@ -1,7 +1,8 @@
 import type { MouseEvent } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
 import { ArrowUpRight } from 'lucide-react'
-import { DEPOP_SHOP_URL } from '@/data/products.ts'
+
+const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
 // Small round mark in the colors of the ABC is for XYZ logo
 function LogoMark() {
