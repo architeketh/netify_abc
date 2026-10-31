@@ -5,6 +5,7 @@ import products from '@/data/products.ts'
 import { ConditionMeter } from '@/components/ConditionMeter'
 import { ProductCard } from '@/components/ProductCard'
 import { cdn, srcSet } from '@/lib/img'
+import { sizeLong } from '@/lib/size'
 
 const isRemote = (u: string) => /^https?:\/\//i.test(u)
 // Whole dollars show as $95, cents show as $69.90
@@ -20,7 +21,7 @@ export const Route = createFileRoute('/products/$productId')({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.name} — Architek` },
+          { title: `${loaderData.name} — ABC is for XYZ` },
           { name: 'description', content: loaderData.description },
           { property: 'og:image', content: isRemote(loaderData.image) ? loaderData.image : cdn(loaderData.image, 1200) },
         ]
@@ -111,7 +112,7 @@ function ProductPage() {
 
           <dl className="mt-6 grid grid-cols-2 border-2 border-ink">
             {[
-                      ['Size', `US ${product.size}`],
+                      ['Size', sizeLong(product)],
               ['Condition', product.condition],
             ].map(([k, v], i) => (
               <div key={k} className={`p-3 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
