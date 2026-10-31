@@ -5,9 +5,13 @@
 export const DEPOP_SHOP_URL = 'https://www.depop.com/architek/'
 
 // Set each listing's verified brand; use Other for unverified or unlisted brands.
-export const BRANDS = ['adidas', 'Nike', 'Converse', 'New Balance', 'Reebok', 'Other'] as const
+export const BRANDS = ['adidas', 'Nike', 'Converse', 'New Balance', 'Reebok', 'Puma', 'Other'] as const
 export type Brand = (typeof BRANDS)[number]
 export type Category = 'Basketball' | 'Running' | 'Skate' | 'Court' | 'Trail'
+
+// Condition labels match Depop's. Pick one for each listing.
+export const CONDITIONS = ['Brand New', 'Like New', 'Used - Excellent', 'Used - Good', 'Used - Fair'] as const
+export type Condition = (typeof CONDITIONS)[number]
 
 export interface Product {
   id: string
@@ -17,8 +21,7 @@ export interface Product {
   year: string
   category: Category
   size: string // US men's
-  condition: string
-  conditionScore: number // out of 10
+  condition: Condition
   price: number // USD
   image: string
   description: string
@@ -37,8 +40,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 26.25,
     image: 'https://media-photos.depop.com/b1/463666447/5060359201_869a95a8588349bb9016807819b471b4/P1.jpg',
     description:
@@ -55,8 +57,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 24.43,
     image: 'https://media-photos.depop.com/b1/463666447/5078522007_f543537d2a3b431d91f9313ee2cad62a/P1.jpg',
     description:
@@ -72,8 +73,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Basketball',
     size: '9',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 69.9,
     image: 'https://media-photos.depop.com/b1/463666447/5060366052_917439ce90d142f381441e96c721f09e/P1.jpg',
     description:
@@ -90,8 +90,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '6.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 22.05,
     image: 'https://media-photos.depop.com/b1/463666447/5060341914_b35266006e92408b85f92ae651f762df/P1.jpg',
     description:
@@ -103,12 +102,11 @@ const products: Array<Product> = [
     id: 'puma-suede-xl-in-putty-60a3',
     name: 'Puma Suede XL Putty | Women\'s 8',
     colorway: '',
-    brand: 'Other',
+    brand: 'Puma',
     year: '1990',
     category: 'Running',
     size: '8',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 31.19,
     image: 'https://media-photos.depop.com/b1/463666447/5060419325_767aff57754a430dab6c897a71bc0b5b/P1.jpg',
     description:
@@ -125,8 +123,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '13',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 22.05,
     image: 'https://media-photos.depop.com/b1/463666447/5060345156_52f56a400d2a47c3987a6a7e3c9012bc/P1.jpg',
     description:
@@ -142,8 +139,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Basketball',
     size: '7.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 27.93,
     image: 'https://media-photos.depop.com/b1/463666447/5060372757_c6ea8b37f07340fd82499cc3beb67752/P1.jpg',
     description:
@@ -159,8 +155,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 49.4,
     image: 'https://media-photos.depop.com/b1/463666447/5060371204_2c875714fba343e29b82506f8fb3c8ba/P1.jpg',
     description:
@@ -176,8 +171,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Court',
     size: '7',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 35.69,
     image: 'https://media-photos.depop.com/b1/463666447/5025175981_0cd8d3d4af2d40a7903f4e8c222ad52d/P1.jpg',
     description:
@@ -194,8 +188,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '8',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 13.99,
     image: 'https://media-photos.depop.com/b1/463666447/5060411516_34a1eb2b029c40cfb217099a0277b28a/P1.jpg',
     description:
@@ -211,8 +204,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '9-9.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 22.39,
     image: 'https://media-photos.depop.com/b1/463666447/5072859575_dc267667cc744c81a4706f274da67072/P1.jpg',
     description:
@@ -228,8 +220,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '8.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 49.5,
     image: 'https://media-photos.depop.com/b1/463666447/5060415115_d53d17bf87844f72887f5bbb2b5d27f3/P1.jpg',
     description:
@@ -245,8 +236,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '9',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 27.29,
     image: 'https://media-photos.depop.com/b1/463666447/5060398383_aee66213764746048734b0a971ce74d8/P1.jpg',
     description:
@@ -262,8 +252,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '8.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 20.99,
     image: 'https://media-photos.depop.com/b1/463666447/5060424313_3ec3928697ae4191baf99eedcc957f50/P1.jpg',
     description:
@@ -279,8 +268,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '11',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 34.23,
     image: 'https://media-photos.depop.com/b1/463666447/5060361374_d1abb9f4d1a64670ae667d0afb3bef4b/P1.jpg',
     description:
@@ -296,8 +284,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 34.23,
     image: 'https://media-photos.depop.com/b1/463666447/5060406438_fb85294fc2664834b3be15498edbc313/P1.jpg',
     description:
@@ -313,8 +300,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '6-6.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 14.59,
     image: 'https://media-photos.depop.com/b1/463666447/5060382202_20f3a1e05b364646b4efc684cf3c01af/P1.jpg',
     description:
@@ -330,8 +316,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '8',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Like New',
     price: 14.24,
     image: 'https://media-photos.depop.com/b1/463666447/4896113554_dbcc195713a844b7b242a0983f5d18fc/P1.jpg',
     description:
@@ -347,8 +332,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '12-12.5',
-    condition: '',
-    conditionScore: 7,
+    condition: 'Used - Excellent',
     price: 14,
     image: 'https://media-photos.depop.com/b1/463666447/5060426461_01ff1297c5ef4daa9689eb38e6f4a392/P1.jpg',
     description:
