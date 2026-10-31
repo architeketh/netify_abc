@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 'lucide-react'
 import products, { BRANDS, CONDITIONS, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
@@ -29,6 +29,9 @@ const TICKER = [
   'Honest condition labels',
 ]
 
+// How many pairs show before the "Show more" button
+const PAGE_SIZE = 24
+
 const sizeKey = (p: Product) => `${p.sizeType}|${p.size}`
 
 function Home() {
@@ -38,6 +41,9 @@ function Home() {
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
   const [showSold, setShowSold] = useState(true)
+  const [limit, setLimit] = useState(PAGE_SIZE)
+  // Start from the first batch again whenever a filter changes
+  useEffect(() => setLimit(PAGE_SIZE), [brand, size, sort, showSold])
 
   // One entry per size and who it is for, e.g. M 9, W 9, Kids 12
   const sizes = useMemo(() => {
@@ -157,8 +163,8 @@ function Home() {
             </p>
             <h2 className="font-display mt-3 text-5xl sm:text-6xl">The Archive</h2>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <label className="flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
+            <label className="col-span-2 flex min-h-11 items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase sm:col-span-1">
               <input
                 type="checkbox"
                 checked={showSold}
@@ -167,7 +173,7 @@ function Home() {
               />
               Show sold
             </label>
-            <label className="flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
+            <label className="flex min-h-11 items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
               Size
               <select
                 value={size}
@@ -182,7 +188,7 @@ function Home() {
                 ))}
               </select>
             </label>
-            <label className="flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
+            <label className="flex min-h-11 items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
               Sort
               <select
                 value={sort}
@@ -199,7 +205,7 @@ function Home() {
         </div>
 
         {/* Brand filters */}
-        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-5" role="group" aria-label="Filter by brand">
+        <div className="mt-8 flex gap-[2px] overflow-x-auto border-2 border-ink bg-ink sm:mt-10 sm:grid sm:grid-cols-5 sm:overflow-visible" role="group" aria-label="Filter by brand">
           {BRAND_FILTERS.map((e) => {
             const active = brand === e.id
             const count =
@@ -210,7 +216,7 @@ function Home() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => setBrand(e.id)}
-                className={`group relative flex flex-col items-start gap-1 p-4 pt-8 text-left transition ${
+                className={`group relative flex min-w-[7.5rem] shrink-0 flex-col items-start gap-1 p-4 pt-8 text-left transition sm:min-w-0 ${
                   active ? 'bg-ink text-paper' : 'bg-paper hover:bg-paper-deep'
                 }`}
               >
@@ -226,8 +232,8 @@ function Home() {
         </div>
 
         {visible.length > 0 ? (
-          <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {visible.map((product) => (
+          <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-6 sm:mt-12 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4">
+            {visible.slice(0, limit).map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -246,6 +252,18 @@ function Home() {
             <a href="#drops" className="mt-6 border-2 border-ink px-5 py-2 font-bold uppercase hover:bg-ink hover:text-paper">
               Get drop alerts
             </a>
+          </div>
+        )}
+
+        {visible.length > limit && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setLimit((n) => n + PAGE_SIZE)}
+              className="min-h-12 border-2 border-ink bg-paper px-8 py-3 font-display text-2xl shadow-[4px_4px_0_var(--color-ink)] active:translate-y-0.5"
+            >
+              Show more ({visible.length - limit} left)
+            </button>
           </div>
         )}
 
