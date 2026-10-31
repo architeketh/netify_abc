@@ -26,8 +26,8 @@ const TICKER = [
 ]
 
 function Home() {
-  // The main photo is public/img/hero.png. If that file isn't there, use the photo of the first pair for sale.
-  const heroFallback = (products.find((p) => !p.sold) ?? products[0])?.image
+  // Main photo: the first pair for sale. To use your own photo instead, replace this with '/img/hero.png'.
+  const heroImage = (products.find((p) => !p.sold) ?? products[0])?.image ?? '/img/hero.png'
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
@@ -90,11 +90,8 @@ function Home() {
           <div className="relative">
             <div className="relative rotate-2 border-2 border-ink bg-paper p-3 pb-14 shadow-[10px_10px_0_var(--color-ink)]">
               <img
-                src="/img/hero.png"
+                src={heroImage}
                 referrerPolicy="no-referrer"
-                onError={(e) => {
-                  if (heroFallback && !e.currentTarget.src.endsWith(heroFallback)) e.currentTarget.src = heroFallback
-                }}
                 alt="Sneakers from the Architek archive"
                 className="aspect-[4/3] w-full object-cover"
                 fetchPriority="high"
@@ -109,7 +106,9 @@ function Home() {
                   <path id="circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
                 </defs>
                 <text className="font-mono text-[9.5px] font-bold uppercase tracking-[0.2em]">
-                  <textPath href="#circle">Authentic vintage · Graded by hand ·</textPath>
+                  <textPath href="#circle" textLength="232" lengthAdjust="spacing">
+                    Inspected by Architek ·
+                  </textPath>
                 </text>
               </svg>
               <span className="font-display text-3xl">'79</span>
