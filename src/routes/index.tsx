@@ -4,7 +4,6 @@ import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 
 import products, { BRANDS, CONDITIONS, DEPOP_SHOP_URL, type Brand } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
 import { DropAlertForm } from '@/components/DropAlertForm'
-import { cdn, srcSet } from '@/lib/img'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -89,9 +88,7 @@ function Home() {
           <div className="relative">
             <div className="relative rotate-2 border-2 border-ink bg-paper p-3 pb-14 shadow-[10px_10px_0_var(--color-ink)]">
               <img
-                src={cdn('/img/hero.png', 1000)}
-                srcSet={srcSet('/img/hero.png', [600, 1000, 1400])}
-                sizes="(min-width: 1024px) 45vw, 100vw"
+                src="/img/hero.png"
                 alt="A pile of vintage sneakers flipped over to show their worn, yellowed outsoles"
                 className="aspect-[4/3] w-full object-cover"
                 fetchPriority="high"
