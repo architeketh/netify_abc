@@ -6,6 +6,10 @@ import { ConditionMeter } from '@/components/ConditionMeter'
 import { ProductCard } from '@/components/ProductCard'
 import { cdn, srcSet } from '@/lib/img'
 
+const isRemote = (u: string) => /^https?:\/\//i.test(u)
+// Whole dollars show as $95, cents show as $69.90
+const formatPrice = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(2))
+
 export const Route = createFileRoute('/products/$productId')({
   component: ProductPage,
   loader: ({ params }) => {
@@ -18,7 +22,7 @@ export const Route = createFileRoute('/products/$productId')({
       ? [
           { title: `${loaderData.name} (${loaderData.year}) — Architek` },
           { name: 'description', content: loaderData.description },
-          { property: 'og:image', content: cdn(loaderData.image, 1200) },
+          { property: 'og:image', content: isRemote(loaderData.image) ? loaderData.image : cdn(loaderData.image, 1200) },
         ]
       : [],
   }),
@@ -69,8 +73,9 @@ function ProductPage() {
           onMouseLeave={() => setZoom(null)}
         >
           <img
-            src={cdn(product.image, 1100)}
-            srcSet={srcSet(product.image, [600, 900, 1400])}
+            src={isRemote(product.image) ? product.image : cdn(product.image, 1100)}
+            srcSet={isRemote(product.image) ? undefined : srcSet(product.image, [600, 900, 1400])}
+            referrerPolicy="no-referrer"
             sizes="(min-width: 1024px) 55vw, 100vw"
             alt={`${product.name} in ${product.colorway}`}
             className={`h-full w-full object-cover transition-transform duration-200 ${product.sold ? 'grayscale' : ''}`}
@@ -94,25 +99,24 @@ function ProductPage() {
               {product.brand} · {product.category}
             </span>
           </div>
-          <h1 className="font-display mt-4 text-7xl sm:text-8xl">{product.name}</h1>
-          <p className="mt-2 text-xl text-ink/70">{product.colorway}</p>
+          <h1 className="font-display mt-4 text-3xl sm:text-4xl">{product.name}</h1>
+          <p className="mt-2 text-base text-ink/70">{product.colorway}</p>
 
           <div className="mt-8 flex items-end gap-4">
-            <span className="font-display text-7xl">${product.price}</span>
+            <span className="font-display text-4xl">${formatPrice(product.price)}</span>
             <span className="mb-2 font-mono text-xs uppercase tracking-widest text-ink/60">
               USD · via Depop
             </span>
           </div>
 
-          <dl className="mt-8 grid grid-cols-3 border-2 border-ink">
+          <dl className="mt-8 grid grid-cols-2 border-2 border-ink">
             {[
-              ['Year', product.year],
-              ['Size', `US ${product.size}`],
+                      ['Size', `US ${product.size}`],
               ['Grade', `${product.conditionScore}/10`],
             ].map(([k, v], i) => (
               <div key={k} className={`p-4 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
                 <dt className="font-mono text-[10px] uppercase tracking-widest text-ink/60">{k}</dt>
-                <dd className="font-display mt-1 text-3xl">{v}</dd>
+                <dd className="font-display mt-1 text-2xl">{v}</dd>
               </div>
             ))}
           </dl>
@@ -125,7 +129,7 @@ function ProductPage() {
             <ConditionMeter score={product.conditionScore} />
           </div>
 
-          <p className="mt-8 text-lg leading-relaxed text-ink/80">{product.description}</p>
+          <p className="mt-8 text-sm leading-relaxed text-ink/80">{product.description}</p>
 
           <ul className="mt-6 space-y-2">
             {product.details.map((d) => (
@@ -136,7 +140,7 @@ function ProductPage() {
           </ul>
 
           {product.sold ? (
-            <p className="font-display mt-10 border-2 border-ink p-5 text-center text-4xl">
+            <p className="font-display mt-10 border-2 border-ink p-5 text-center text-2xl">
               Sold — sorry!
             </p>
           ) : (
@@ -144,10 +148,10 @@ function ProductPage() {
               href={product.depopUrl}
               target="_blank"
               rel="noreferrer"
-              className="group mt-10 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-5 font-display text-4xl text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
+              className="group mt-10 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-5 font-display text-2xl text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
             >
               Cop it on Depop
-              <ArrowUpRight className="size-8 transition group-hover:rotate-45" />
+              <ArrowUpRight className="size-6 transition group-hover:rotate-45" />
             </a>
           )}
           <p className="mt-4 text-center font-mono text-xs uppercase tracking-widest text-ink/60">
@@ -158,7 +162,7 @@ function ProductPage() {
 
       {related.length > 0 && (
         <section className="mt-28">
-          <h2 className="font-display text-6xl">Also in the archive</h2>
+          <h2 className="font-display text-3xl">Also in the archive</h2>
           <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} index={products.indexOf(p)} />
