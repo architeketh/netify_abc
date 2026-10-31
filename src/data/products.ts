@@ -7,7 +7,7 @@ export const DEPOP_SHOP_URL = 'https://www.depop.com/architek/'
 // Set each listing's verified brand; use Other for unverified or unlisted brands.
 export const BRANDS = ['adidas', 'Nike', 'Converse', 'New Balance', 'Reebok', 'Puma', 'Other'] as const
 export type Brand = (typeof BRANDS)[number]
-export type Category = 'Basketball' | 'Running' | 'Skate' | 'Court' | 'Trail'
+export type Category = 'Basketball' | 'Running' | 'Skate' | 'Court' | 'Trail' | 'Street'
 
 // Condition labels match Depop's. Pick one for each listing.
 export const CONDITIONS = ['Brand New', 'Like New', 'Used - Excellent', 'Used - Good', 'Used - Fair'] as const
@@ -40,7 +40,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7',
-    condition: 'Brand New',
+    condition: 'Used - Excellent',
     price: 26.25,
     image: 'https://media-photos.depop.com/b1/463666447/5060359201_869a95a8588349bb9016807819b471b4/P1.jpg',
     description:
@@ -57,7 +57,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7.5',
-    condition: 'Brand New',
+    condition: 'Used - Excellent',
     price: 24.43,
     image: 'https://media-photos.depop.com/b1/463666447/5078522007_f543537d2a3b431d91f9313ee2cad62a/P1.jpg',
     description:
@@ -73,7 +73,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Basketball',
     size: '9',
-    condition: 'Brand New',
+    condition: 'Used - Excellent',
     price: 69.9,
     image: 'https://media-photos.depop.com/b1/463666447/5060366052_917439ce90d142f381441e96c721f09e/P1.jpg',
     description:
@@ -84,7 +84,7 @@ const products: Array<Product> = [
   },
   {
     id: 'lightweight-athletic-shoes-with-breathable-0d19',
-    name: 'Nike Preowned. No box. Lightweight athletic shoes with',
+    name: 'Preowned. No box. Lightweight athletic shoes with',
     colorway: '',
     brand: 'Other',
     year: '1990',
@@ -102,7 +102,7 @@ const products: Array<Product> = [
     id: 'puma-suede-xl-in-putty-60a3',
     name: 'Puma Suede XL Putty | Women\'s 8',
     colorway: '',
-    brand: 'Other',
+    brand: 'Puma',
     year: '1990',
     category: 'Running',
     size: '8',
@@ -117,13 +117,13 @@ const products: Array<Product> = [
   },
   {
     id: 'converse-one-star-ox-ash-f595',
-    name: 'Converse One Star Ox Ash Grey Preowned. No box. Mens Size 13',
+    name: 'Preowned. No box. Converse One Star Ox Ash Grey Mens Size 13',
     colorway: '',
     brand: 'Converse',
     year: '1990',
     category: 'Running',
     size: '13',
-    condition: 'Used - Good',
+    condition: 'Used - Excellent',
     price: 22.05,
     image: 'https://media-photos.depop.com/b1/463666447/5060345156_52f56a400d2a47c3987a6a7e3c9012bc/P1.jpg',
     description:
@@ -155,7 +155,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7',
-    condition: 'Brand New',
+    condition: 'Used - Excellent',
     price: 49.4,
     image: 'https://media-photos.depop.com/b1/463666447/5060371204_2c875714fba343e29b82506f8fb3c8ba/P1.jpg',
     description:
@@ -236,7 +236,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '9',
-    condition: 'Brand New',
+    condition: 'Used - Excellent',
     price: 27.29,
     image: 'https://media-photos.depop.com/b1/463666447/5060398383_aee66213764746048734b0a971ce74d8/P1.jpg',
     description:
@@ -332,7 +332,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '12-12.5',
-    condition: 'Brand New',
+    condition: 'Used - Excellent',
     price: 14,
     image: 'https://media-photos.depop.com/b1/463666447/5060426461_01ff1297c5ef4daa9689eb38e6f4a392/P1.jpg',
     description:
