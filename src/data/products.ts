@@ -57,7 +57,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Running',
     size: '7.5',
-    condition: 'Used - Excellent',
+    condition: 'Brand New',
     price: 24.43,
     image: 'https://media-photos.depop.com/b1/463666447/5078522007_f543537d2a3b431d91f9313ee2cad62a/P1.jpg',
     description:
@@ -73,7 +73,7 @@ const products: Array<Product> = [
     year: '1990',
     category: 'Basketball',
     size: '9',
-    condition: 'Used - Excellent',
+    condition: 'Brand New',
     price: 69.9,
     image: 'https://media-photos.depop.com/b1/463666447/5060366052_917439ce90d142f381441e96c721f09e/P1.jpg',
     description:
