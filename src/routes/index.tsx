@@ -20,7 +20,8 @@ type Sort = 'featured' | 'price-asc' | 'price-desc' | 'condition'
 const TICKER = [
   'Hand-picked vintage',
   'Cleaned & graded',
-  'Ships in 24h',
+  'Clear pricing + quick replies',
+  'Ships within 24 hrs from MN',
   'Vintage + new',
   'One of one',
   'Honest condition labels',
@@ -70,9 +71,9 @@ function Home() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[1.15fr_1fr] lg:items-end lg:pt-16">
           <div className="rise relative z-10">
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink/60">
-              Est. on Depop · Vintage sneaker archive
+              A–Z curated vintage + modern finds • Built for repeat buyers
             </p>
-            <h1 className="font-display mt-5 text-[22vw] sm:text-[9.5rem] lg:text-[10.5rem]">
+            <h1 className="font-display mt-5 text-[15vw] sm:text-6xl lg:text-8xl">
               Worn-in
               <br />
               <span className="text-outline">history.</span>
@@ -106,12 +107,12 @@ function Home() {
               <img
                 src={heroImage}
                 referrerPolicy="no-referrer"
-                alt="Sneakers from the Architek archive"
+                alt="Sneakers from ABC is for XYZ"
                 className="aspect-[4/3] w-full object-cover"
                 fetchPriority="high"
               />
               <p className="absolute bottom-4 left-4 font-mono text-xs uppercase tracking-widest text-ink/70">
-                Fig. 01 — Forty years of soles
+                Fig. 01 — Curated A to Z
               </p>
             </div>
             <div className="spin-slow absolute -left-6 -top-8 grid size-32 place-items-center rounded-full border-2 border-ink bg-volt sm:-left-10 sm:size-36">
@@ -121,11 +122,11 @@ function Home() {
                 </defs>
                 <text className="font-mono text-[9.5px] font-bold uppercase tracking-[0.2em]">
                   <textPath href="#circle" textLength="232" lengthAdjust="spacing">
-                    Inspected by Architek ·
+                    Inspected by ABC is for XYZ ·
                   </textPath>
                 </text>
               </svg>
-              <span className="font-display text-3xl">'79</span>
+              <span className="font-display text-3xl">A–Z</span>
             </div>
           </div>
         </div>
@@ -153,7 +154,7 @@ function Home() {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink/60">
               Current drop · {products.filter((p) => !p.sold).length} pairs
             </p>
-            <h2 className="font-display mt-3 text-7xl sm:text-8xl">The Archive</h2>
+            <h2 className="font-display mt-3 text-5xl sm:text-6xl">The Archive</h2>
           </div>
           <div className="flex flex-wrap gap-3">
             <label className="flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
@@ -273,7 +274,7 @@ function Home() {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink/60">
               No surprises
             </p>
-            <h2 className="font-display mt-3 text-7xl sm:text-8xl">
+            <h2 className="font-display mt-3 text-5xl sm:text-6xl">
               Graded <span className="text-signal">honest.</span>
             </h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/80">
@@ -302,7 +303,7 @@ function Home() {
           {[
             { icon: Search, title: 'Sourced by hand', copy: 'Thrift bins, estate sales, old stockrooms. We dig so you don’t have to.' },
             { icon: ShieldCheck, title: 'Checked & cleaned', copy: 'Authenticity checks, deep clean, and fresh laces where needed.' },
-            { icon: Package, title: 'Bought safely on Depop', copy: 'Checkout through Depop with buyer protection. Ships within 24 hours.' },
+            { icon: Package, title: 'Bought safely on Depop', copy: 'Checkout through Depop with buyer protection. Ships within 24 hours from MN.' },
           ].map(({ icon: Icon, title, copy }, i) => (
             <div key={title} className="border-2 border-ink bg-paper p-6 shadow-[6px_6px_0_var(--color-ink)]">
               <div className="flex items-center justify-between">
@@ -321,7 +322,7 @@ function Home() {
         <div className="grid gap-10 border-2 border-ink bg-ink p-6 text-paper sm:p-10 lg:grid-cols-2 lg:p-14">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-volt">Drop alerts</p>
-            <h2 className="font-display mt-3 text-7xl sm:text-8xl">
+            <h2 className="font-display mt-3 text-5xl sm:text-6xl">
               Your size.
               <br />
               <span className="text-signal">First dibs.</span>

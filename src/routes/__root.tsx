@@ -4,9 +4,9 @@ import { SiteFooter } from '@/components/SiteFooter'
 
 import '../styles.css'
 
-const siteName = 'ARCHITEK — Vintage Sneaker Archive'
+const siteName = 'ABC is for XYZ — Curated Vintage + Modern Finds'
 const siteDescription =
-  'Hand-picked vintage sneakers from the 70s, 80s, 90s and Y2K. Worn-in history, laced for now. Shop the archive on Depop.'
+  'A–Z curated vintage + modern finds • Built for repeat buyers. Clear pricing + quick replies. Ships within 24 hrs from MN. Shop on Depop.'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -39,11 +39,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'twitter:card',
-        content: 'summary_large_image',
-      },
-      {
-        property: 'og:image',
-        content: '/.netlify/images?url=/img/hero.png&w=1200&fm=jpg',
+        content: 'summary',
       },
     ],
     links: [
@@ -52,7 +48,7 @@ export const Route = createRootRoute({
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap',
       },
     ],
   }),
