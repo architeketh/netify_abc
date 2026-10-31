@@ -2,7 +2,7 @@
 // To add a pair: copy an entry, give it a unique `id`, drop a photo in
 // public/img/, and paste the item's Depop listing URL into `depopUrl`.
 
-export const DEPOP_SHOP_URL = 'https://www.depop.com/architek/'
+export const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
 // Set each listing's verified brand; use Other for unverified or unlisted brands.
 export const BRANDS = ['adidas', 'Nike', 'Converse', 'New Balance', 'Reebok', 'Puma', 'UGG', 'Timberland', 'Other'] as const
@@ -53,6 +53,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isforsxyz-7w-golden-goose-super-star-sneakers-e48e/',
+    sold: true,
     tag: 'Grail',
   },
   {
