@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 'lucide-react'
-import products, { BRANDS, DEPOP_SHOP_URL, type Brand } from '@/data/products.ts'
+import products, { BRANDS, CONDITIONS, DEPOP_SHOP_URL, type Brand } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
 import { DropAlertForm } from '@/components/DropAlertForm'
 import { cdn, srcSet } from '@/lib/img'
@@ -15,15 +15,15 @@ const BRAND_FILTERS: Array<{ id: Brand | 'all'; label: string }> = [
   ...BRANDS.map((brand) => ({ id: brand, label: brand })),
 ]
 
-type Sort = 'featured' | 'price-asc' | 'price-desc' | 'oldest' | 'condition'
+type Sort = 'featured' | 'price-asc' | 'price-desc' | 'condition'
 
 const TICKER = [
   'Hand-picked vintage',
   'Cleaned & graded',
   'Ships in 48h',
-  '1979 → 1999',
+  'Vintage + new',
   'One of one',
-  'No reprints, no retros',
+  'Honest condition labels',
 ]
 
 function Home() {
@@ -43,8 +43,8 @@ function Home() {
     const sorted = [...list]
     if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price)
     if (sort === 'price-desc') sorted.sort((a, b) => b.price - a.price)
-    if (sort === 'oldest') sorted.sort((a, b) => +a.year - +b.year)
-    if (sort === 'condition') sorted.sort((a, b) => b.conditionScore - a.conditionScore)
+    if (sort === 'condition')
+      sorted.sort((a, b) => CONDITIONS.indexOf(a.condition) - CONDITIONS.indexOf(b.condition))
     return sorted
   }, [brand, size, sort])
 
@@ -65,8 +65,8 @@ function Home() {
               <span className="text-signal">Laced</span> for now.
             </h1>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-ink/80">
-              Architek digs up the sneakers that defined the 70s, 80s, 90s and Y2K — cleaned,
-              graded and honest about every crease. One pair, one owner at a time.
+              Vintage and new sneakers from adidas, Nike, Converse, New Balance, Reebok and Puma —
+              cleaned, graded and honest about every crease. One pair, one owner at a time.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -163,7 +163,6 @@ function Home() {
                 className="bg-transparent font-mono focus:outline-none"
               >
                 <option value="featured">Featured</option>
-                <option value="oldest">Oldest first</option>
                 <option value="condition">Best condition</option>
                 <option value="price-asc">Price ↑</option>
                 <option value="price-desc">Price ↓</option>
@@ -173,8 +172,8 @@ function Home() {
         </div>
 
         {/* Brand filters */}
-        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-3 lg:grid-cols-7" role="group" aria-label="Filter by brand">
-          {BRAND_FILTERS.map((e, i) => {
+        <div className="mt-10 grid grid-cols-2 gap-[2px] border-2 border-ink bg-ink sm:grid-cols-4" role="group" aria-label="Filter by brand">
+          {BRAND_FILTERS.map((e) => {
             const active = brand === e.id
             const count =
               e.id === 'all' ? products.length : products.filter((p) => p.brand === e.id).length
@@ -185,8 +184,8 @@ function Home() {
                 aria-pressed={active}
                 onClick={() => setBrand(e.id)}
                 className={`group relative flex flex-col items-start gap-1 p-4 pt-8 text-left transition ${
-                  i === 0 ? 'col-span-2 sm:col-span-3 lg:col-span-1' : ''
-                } ${active ? 'bg-ink text-paper' : 'bg-paper hover:bg-paper-deep'}`}
+                  active ? 'bg-ink text-paper' : 'bg-paper hover:bg-paper-deep'
+                }`}
               >
                 <span className="font-display text-3xl">{e.label}</span>
                 <span
@@ -263,23 +262,21 @@ function Home() {
             </h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/80">
               Vintage is never perfect — that's the point. Every pair gets a hands-on inspection
-              and a 1–10 condition score, so you know exactly how much life (and story) is left
-              in them.
+              and a condition label that matches Depop's, so you know exactly how much life (and
+              story) is left in them.
             </p>
           </div>
           <div className="divide-y-2 divide-ink border-2 border-ink">
             {[
-              ['9–10', 'Near deadstock', 'Barely worn, minimal creasing. Shelf or rotation — your call.'],
-              ['7–8', 'Very good', 'Light wear and natural patina. Clean, sturdy, ready to lace up.'],
-              ['5–6', 'Well loved', 'Visible creasing and scuffs. Wearable history at a friendlier price.'],
-              ['1–4', 'Project pair', 'For restorers and display. Flaws are always photographed and listed.'],
-            ].map(([score, label, copy]) => (
-              <div key={score} className="grid grid-cols-[6rem_1fr] items-center gap-4 p-5 transition hover:bg-volt sm:grid-cols-[8rem_1fr]">
-                <span className="font-display text-5xl">{score}</span>
-                <div>
-                  <p className="font-bold uppercase">{label}</p>
-                  <p className="mt-1 text-sm text-ink/70">{copy}</p>
-                </div>
+              ['Brand New', 'Never worn. May have tags or the original box.'],
+              ['Like New', 'Worn once or twice at most. No visible wear.'],
+              ['Used - Excellent', 'Light wear and natural patina. Clean, sturdy, ready to lace up.'],
+              ['Used - Good', 'Visible creasing and scuffs. Wearable history at a friendlier price.'],
+              ['Used - Fair', 'Heavy wear or flaws. Always photographed and listed.'],
+            ].map(([label, copy]) => (
+              <div key={label} className="grid grid-cols-[9rem_1fr] items-center gap-4 p-5 transition hover:bg-volt sm:grid-cols-[12rem_1fr]">
+                <span className="font-display text-2xl">{label}</span>
+                <p className="text-sm text-ink/70">{copy}</p>
               </div>
             ))}
           </div>
