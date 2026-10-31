@@ -52,13 +52,10 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
         </div>
 
         <div className="p-4">
-          <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-ink/60">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-ink/60">
             <span className="tag-hole">{catalogNo}</span>
-            <span>
-              {product.year} · {product.category}
-            </span>
           </div>
-          <h3 className="font-display mt-2 line-clamp-2 text-base leading-tight">{product.name}</h3>
+          <h3 className="mt-2 line-clamp-2 text-sm font-medium leading-snug">{product.name}</h3>
           <p className="mt-1 font-mono text-xs uppercase text-ink/60">{product.brand}</p>
           <p className="mt-1 text-sm text-ink/70">{product.colorway}</p>
           <ConditionMeter score={product.conditionScore} className="mt-4" />
