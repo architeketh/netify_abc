@@ -37,6 +37,7 @@ function Home() {
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
+  const [showSold, setShowSold] = useState(true)
 
   // One entry per size and who it is for, e.g. M 9, W 9, Kids 12
   const sizes = useMemo(() => {
@@ -56,15 +57,18 @@ function Home() {
 
   const visible = useMemo(() => {
     const list = products.filter(
-      (p) => (brand === 'all' || p.brand === brand) && (size === 'all' || sizeKey(p) === size),
+      (p) => (brand === 'all' || p.brand === brand) &&
+        (size === 'all' || sizeKey(p) === size) &&
+        (showSold || !p.sold),
     )
     const sorted = [...list]
     if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price)
     if (sort === 'price-desc') sorted.sort((a, b) => b.price - a.price)
     if (sort === 'condition')
       sorted.sort((a, b) => CONDITIONS.indexOf(a.condition) - CONDITIONS.indexOf(b.condition))
-    return sorted
-  }, [brand, size, sort])
+    // Sold pairs always go to the end of the list
+    return [...sorted.filter((p) => !p.sold), ...sorted.filter((p) => p.sold)]
+  }, [brand, size, sort, showSold])
 
   return (
     <>
@@ -148,11 +152,21 @@ function Home() {
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink/60">
-              Current drop · {products.filter((p) => !p.sold).length} pairs
+              Current drop · {products.filter((p) => !p.sold).length} for sale
+              {products.some((p) => p.sold) && ` · ${products.filter((p) => p.sold).length} sold`}
             </p>
             <h2 className="font-display mt-3 text-5xl sm:text-6xl">The Archive</h2>
           </div>
           <div className="flex flex-wrap gap-3">
+            <label className="flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
+              <input
+                type="checkbox"
+                checked={showSold}
+                onChange={(e) => setShowSold(e.target.checked)}
+                className="size-4 accent-ink"
+              />
+              Show sold
+            </label>
             <label className="flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
               Size
               <select
