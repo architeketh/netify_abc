@@ -1,6 +1,6 @@
-import type { MouseEvent } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
 
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
@@ -32,6 +32,7 @@ function LogoMark() {
 export function SiteHeader() {
   const { pathname } = useLocation()
   const onHome = pathname === '/'
+  const [open, setOpen] = useState(false)
 
   // On the home page, scroll to the top (or to a section) every time, even when the
   // address already ends in that #section. On a shoe page, let the link go to the home page.
@@ -40,6 +41,10 @@ export function SiteHeader() {
     e.preventDefault()
     window.scrollTo({ top: 0, behavior: 'smooth' })
     window.history.replaceState(null, '', '/')
+  }
+  const closeAnd = (fn: (e: MouseEvent) => void) => (e: MouseEvent) => {
+    setOpen(false)
+    fn(e)
   }
   const toSection = (id: string) => (e: MouseEvent) => {
     if (!onHome) return
@@ -98,12 +103,49 @@ export function SiteHeader() {
             href={DEPOP_SHOP_URL}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1 rounded-full border-2 border-ink bg-signal px-4 py-2 text-paper shadow-[3px_3px_0_var(--color-ink)] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--color-ink)]"
+            className="flex items-center gap-1 rounded-full border-2 border-ink bg-signal px-3 py-2 text-xs text-paper sm:px-4 sm:text-sm shadow-[3px_3px_0_var(--color-ink)] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--color-ink)]"
           >
             Shop Depop <ArrowUpRight className="size-4" />
           </a>
+          <button
+            type="button"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="grid size-11 place-items-center rounded-full border-2 border-ink md:hidden"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
         </nav>
       </div>
+      {open && (
+        <nav className="border-t-2 border-ink bg-paper md:hidden" aria-label="Menu">
+          {[
+            { label: 'Home', id: '' },
+            { label: 'The Archive', id: 'archive' },
+            { label: 'Grading', id: 'grading' },
+            { label: 'Drop Alerts', id: 'drops' },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              to="/"
+              hash={item.id || undefined}
+              onClick={closeAnd(item.id ? toSection(item.id) : toTop)}
+              className="font-display block border-b border-ink/20 px-6 py-4 text-2xl active:bg-paper-deep"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <a
+            href={DEPOP_SHOP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="font-display flex items-center justify-between bg-signal px-6 py-4 text-2xl text-paper"
+          >
+            Shop on Depop <ArrowUpRight className="size-6" />
+          </a>
+        </nav>
+      )}
     </header>
   )
 }
