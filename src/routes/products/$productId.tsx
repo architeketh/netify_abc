@@ -99,24 +99,24 @@ function ProductPage() {
               {product.brand} · {product.category}
             </span>
           </div>
-          <h1 className="font-display mt-4 text-3xl sm:text-4xl">{product.name}</h1>
+          <h1 className="mt-4 text-lg font-medium leading-snug sm:text-xl">{product.name}</h1>
           <p className="mt-2 text-base text-ink/70">{product.colorway}</p>
 
-          <div className="mt-8 flex items-end gap-4">
-            <span className="font-display text-4xl">${formatPrice(product.price)}</span>
+          <div className="mt-5 flex items-end gap-4">
+            <span className="font-display text-2xl">${formatPrice(product.price)}</span>
             <span className="mb-2 font-mono text-xs uppercase tracking-widest text-ink/60">
               USD · via Depop
             </span>
           </div>
 
-          <dl className="mt-8 grid grid-cols-2 border-2 border-ink">
+          <dl className="mt-6 grid grid-cols-2 border-2 border-ink">
             {[
                       ['Size', `US ${product.size}`],
               ['Grade', `${product.conditionScore}/10`],
             ].map(([k, v], i) => (
-              <div key={k} className={`p-4 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
+              <div key={k} className={`p-3 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
                 <dt className="font-mono text-[10px] uppercase tracking-widest text-ink/60">{k}</dt>
-                <dd className="font-display mt-1 text-2xl">{v}</dd>
+                <dd className="font-display mt-1 text-lg">{v}</dd>
               </div>
             ))}
           </dl>
@@ -129,7 +129,7 @@ function ProductPage() {
             <ConditionMeter score={product.conditionScore} />
           </div>
 
-          <p className="mt-8 text-sm leading-relaxed text-ink/80">{product.description}</p>
+          <p className="mt-6 text-sm leading-relaxed text-ink/80">{product.description}</p>
 
           <ul className="mt-6 space-y-2">
             {product.details.map((d) => (
@@ -148,10 +148,10 @@ function ProductPage() {
               href={product.depopUrl}
               target="_blank"
               rel="noreferrer"
-              className="group mt-10 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-5 font-display text-2xl text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
+              className="group mt-8 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-3 font-display text-lg text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
             >
               Cop it on Depop
-              <ArrowUpRight className="size-6 transition group-hover:rotate-45" />
+              <ArrowUpRight className="size-5 transition group-hover:rotate-45" />
             </a>
           )}
           <p className="mt-4 text-center font-mono text-xs uppercase tracking-widest text-ink/60">
