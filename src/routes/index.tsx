@@ -22,6 +22,9 @@ const KINDS: Array<{ id: Kind; color: string }> = [
 ]
 const kindOf = (p: Product): Kind => {
   const category: string = p.category
+  const brand: string = p.brand
+  // Bag brands always count as bags, even if the item was left on the default category
+  if (brand === 'Coach' || brand === 'Vera Bradley') return 'Bags'
   return category === 'Boots' ? 'Boots' : category === 'Bags' ? 'Bags' : category === 'Clothing' ? 'Clothing' : 'Sneakers'
 }
 
