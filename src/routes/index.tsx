@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUpRight, Package, Search, ShieldCheck, Sparkles } from 
 import products, { BRANDS, CONDITIONS, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
 import { DropAlertForm } from '@/components/DropAlertForm'
-import { sizeShort } from '@/lib/size'
+import { sizeOrder, sizeShort } from '@/lib/size'
 
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
@@ -12,10 +12,18 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 
-const BRAND_FILTERS: Array<{ id: Brand | 'all'; label: string }> = [
-  { id: 'all', label: 'All brands' },
-  ...BRANDS.map((brand) => ({ id: brand, label: brand })),
+// What kind of item it is. Shoes use the category set in the manage page; Bags and Clothing have their own.
+type Kind = 'Sneakers' | 'Boots' | 'Bags' | 'Clothing'
+const KINDS: Array<{ id: Kind; color: string }> = [
+  { id: 'Sneakers', color: 'bg-volt text-ink' },
+  { id: 'Boots', color: 'bg-clay text-paper' },
+  { id: 'Bags', color: 'bg-lilac text-ink' },
+  { id: 'Clothing', color: 'bg-sole text-ink' },
 ]
+const kindOf = (p: Product): Kind => {
+  const category: string = p.category
+  return category === 'Boots' ? 'Boots' : category === 'Bags' ? 'Bags' : category === 'Clothing' ? 'Clothing' : 'Sneakers'
+}
 
 type Sort = 'featured' | 'price-asc' | 'price-desc' | 'condition'
 
@@ -37,18 +45,42 @@ const sizeKey = (p: Product) => `${p.sizeType}|${p.size}`
 function Home() {
   // Main photo: the first pair for sale. To use your own photo instead, replace this with '/img/hero.png'.
   const heroImage = (products.find((p) => !p.sold) ?? products[0])?.image ?? '/img/hero.png'
+  const [kind, setKind] = useState<Kind | 'all'>('all')
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
   const [showSold, setShowSold] = useState(true)
   const [limit, setLimit] = useState(PAGE_SIZE)
   // Start from the first batch again whenever a filter changes
-  useEffect(() => setLimit(PAGE_SIZE), [brand, size, sort, showSold])
+  useEffect(() => setLimit(PAGE_SIZE), [kind, brand, size, sort, showSold])
 
   // One entry per size and who it is for, e.g. M 9, W 9, Kids 12
+  const inKind = useMemo(
+    () => products.filter((p) => kind === 'all' || kindOf(p) === kind),
+    [kind],
+  )
+  const kindCounts = useMemo(
+    () =>
+      KINDS.map((k) => ({
+        ...k,
+        count: products.filter((p) => kindOf(p) === k.id && (showSold || !p.sold)).length,
+      })).filter((k) => k.count > 0),
+    [showSold],
+  )
+  // Only brands that have something in the chosen kind
+  const brandFilters = useMemo(
+    () =>
+      BRANDS.map((b) => ({
+        id: b as Brand,
+        label: b as string,
+        count: inKind.filter((p) => p.brand === b && (showSold || !p.sold)).length,
+      })).filter((b) => b.count > 0),
+    [inKind, showSold],
+  )
   const sizes = useMemo(() => {
     const seen = new Map<string, Product>()
-    products.forEach((p) => {
+    inKind.forEach((p) => {
+      if (!p.size) return
       const key = sizeKey(p)
       if (!seen.has(key)) seen.set(key, p)
     })
@@ -56,13 +88,13 @@ function Home() {
       .sort(
         ([, a], [, b]) =>
           SIZE_TYPES.indexOf(a.sizeType) - SIZE_TYPES.indexOf(b.sizeType) ||
-          (parseFloat(a.size) || 0) - (parseFloat(b.size) || 0),
+          sizeOrder(a.size) - sizeOrder(b.size),
       )
       .map(([key, p]) => ({ key, label: sizeShort(p) }))
-  }, [])
+  }, [inKind])
 
   const visible = useMemo(() => {
-    const list = products.filter(
+    const list = inKind.filter(
       (p) => (brand === 'all' || p.brand === brand) &&
         (size === 'all' || sizeKey(p) === size) &&
         (showSold || !p.sold),
@@ -74,7 +106,7 @@ function Home() {
       sorted.sort((a, b) => CONDITIONS.indexOf(a.condition) - CONDITIONS.indexOf(b.condition))
     // Sold pairs always go to the end of the list
     return [...sorted.filter((p) => !p.sold), ...sorted.filter((p) => p.sold)]
-  }, [brand, size, sort, showSold])
+  }, [inKind, brand, size, sort, showSold])
 
   return (
     <>
@@ -86,15 +118,15 @@ function Home() {
               A–Z curated vintage + modern finds • Built for repeat buyers
             </p>
             <h1 className="font-display mt-5 text-[15vw] sm:text-6xl lg:text-8xl">
-              Worn-in
+              Vintage
               <br />
-              <span className="text-outline">history.</span>
+              <span className="text-outline">+ modern</span>
               <br />
-              <span className="text-signal">Laced</span> for now.
+              <span className="text-signal">A to Z.</span>
             </h1>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-ink/80">
-              Vintage and new sneakers from adidas, Nike, Converse, New Balance, Reebok and Puma —
-              cleaned, graded and honest about every crease. One pair, one owner at a time.
+              Vintage and modern sneakers, boots, bags and clothing — cleaned, graded and honest
+              about every crease. One of one, so when it's gone, it's gone.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -204,12 +236,37 @@ function Home() {
           </div>
         </div>
 
+        {/* What are you looking for */}
+        <div className="mt-8 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter by type">
+          {[{ id: 'all' as const, label: 'Everything', color: 'bg-ink text-paper', count: kindCounts.reduce((n, k) => n + k.count, 0) },
+            ...kindCounts.map((k) => ({ id: k.id, label: k.id as string, color: k.color, count: k.count }))].map((k) => {
+            const active = kind === k.id
+            return (
+              <button
+                key={k.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => {
+                  setKind(k.id)
+                  setBrand('all')
+                  setSize('all')
+                }}
+                className={`font-display flex min-h-11 shrink-0 items-center gap-2 rounded-full border-2 border-ink px-5 py-2 text-xl transition ${
+                  active ? `${k.color} shadow-[3px_3px_0_var(--color-ink)]` : 'bg-paper hover:bg-paper-deep'
+                }`}
+              >
+                {k.label}
+                <span className="font-mono text-xs opacity-70">{k.count}</span>
+              </button>
+            )
+          })}
+        </div>
+
         {/* Brand filters */}
-        <div className="mt-8 flex gap-[2px] overflow-x-auto border-2 border-ink bg-ink sm:mt-10 sm:grid sm:grid-cols-5 sm:overflow-visible" role="group" aria-label="Filter by brand">
-          {BRAND_FILTERS.map((e) => {
+        <div className="mt-4 flex gap-[2px] overflow-x-auto border-2 border-ink bg-ink sm:mt-4 sm:grid sm:grid-cols-5 sm:overflow-visible" role="group" aria-label="Filter by brand">
+          {[{ id: 'all' as const, label: 'All brands', count: inKind.filter((p) => showSold || !p.sold).length }, ...brandFilters].map((e) => {
             const active = brand === e.id
-            const count =
-              e.id === 'all' ? products.length : products.filter((p) => p.brand === e.id).length
+            const count = e.count
             return (
               <button
                 key={e.id}
@@ -244,9 +301,9 @@ function Home() {
         ) : (
           <div className="mt-12 grid place-items-center border-2 border-dashed border-ink/40 px-6 py-20 text-center">
             <Search className="size-8" />
-            <p className="font-display mt-4 text-4xl">No pairs match — yet.</p>
+            <p className="font-display mt-4 text-4xl">Nothing matches — yet.</p>
             <p className="mt-2 max-w-sm text-ink/70">
-              New pairs land every week. Sign up for drop alerts and we'll ping you when your size
+              New finds land every week. Sign up for drop alerts and we'll ping you when your size
               shows up.
             </p>
             <a href="#drops" className="mt-6 border-2 border-ink px-5 py-2 font-bold uppercase hover:bg-ink hover:text-paper">
@@ -285,7 +342,7 @@ function Home() {
         <div className="marquee marquee-reverse">
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1}>
-              {['Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street', 'Boots', 'Basketball', 'Running', 'Skate', 'Court', 'Trail', 'Street', 'Boots'].map((t, i) => (
+              {['Sneakers', 'Boots', 'Bags', 'Clothing', 'Sneakers', 'Boots', 'Bags', 'Clothing'].map((t, i) => (
                 <span key={i} className="font-display px-6 text-5xl">
                   {i % 2 === 0 ? t : <span className="text-outline [-webkit-text-stroke-color:var(--color-paper)]">{t}</span>}
                 </span>
