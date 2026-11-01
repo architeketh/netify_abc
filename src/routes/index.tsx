@@ -179,13 +179,40 @@ function Home() {
                 Fig. 01 — Curated A to Z
               </p>
             </div>
-            <img
-              src="/img/logo.png"
-              alt="ABC is for XYZ logo"
-              width={480}
-              height={480}
-              className="spin-slow absolute -left-6 -top-8 size-32 rounded-full sm:-left-10 sm:size-36"
-            />
+            {/* Turntable: the logo is the label on a spinning record */}
+            <div
+              role="img"
+              aria-label="ABC is for XYZ logo spinning on a record turntable"
+              className="absolute -left-6 -top-10 aspect-[160/144] w-40 sm:-left-10 sm:w-52"
+            >
+              <div className="absolute inset-0 rounded-md border-2 border-ink bg-clay shadow-[4px_4px_0_var(--color-ink)]" />
+              <div className="absolute left-[6%] top-[10%] aspect-square w-[62%] animate-[spin_4s_linear_infinite] motion-reduce:animate-none">
+                <svg viewBox="0 0 100 100" className="absolute inset-0 size-full" aria-hidden="true">
+                  <circle cx="50" cy="50" r="49" fill="#140d08" />
+                  {[44, 39, 34, 29, 24].map((r) => (
+                    <circle key={r} cx="50" cy="50" r={r} fill="none" stroke="#fff8ea" strokeOpacity="0.14" strokeWidth="0.6" />
+                  ))}
+                  <path d="M50 50 L84 22 A44 44 0 0 1 92 38 Z" fill="#fff8ea" fillOpacity="0.1" />
+                  <path d="M50 50 L16 78 A44 44 0 0 1 8 62 Z" fill="#fff8ea" fillOpacity="0.1" />
+                </svg>
+                <img
+                  src="/img/logo.png"
+                  alt=""
+                  width={480}
+                  height={480}
+                  className="absolute left-[30%] top-[30%] w-[40%] rounded-full"
+                />
+                <span className="absolute left-1/2 top-1/2 size-[3%] min-h-1 min-w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-paper" />
+              </div>
+              <svg viewBox="0 0 160 144" className="absolute inset-0 size-full" aria-hidden="true">
+                <circle cx="140" cy="26" r="9" fill="#ffd95a" stroke="#140d08" strokeWidth="2" />
+                <circle cx="140" cy="26" r="3" fill="#140d08" />
+                <path d="M140 26 L90 84" stroke="#fff8ea" strokeWidth="4" strokeLinecap="round" />
+                <path d="M140 26 L90 84" stroke="#140d08" strokeWidth="1.2" strokeLinecap="round" />
+                <rect x="80" y="80" width="14" height="8" rx="2" transform="rotate(-48 87 84)" fill="#140d08" />
+                <circle cx="139" cy="122" r="6" fill="#e1502f" stroke="#140d08" strokeWidth="2" />
+              </svg>
+            </div>
           </div>
         </div>
       </section>
