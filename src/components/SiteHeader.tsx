@@ -81,7 +81,7 @@ export function SiteHeader() {
             onClick={toSection('archive')}
             className="hidden rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
           >
-            The Archive
+            Urban Ledger
           </Link>
           <Link
             to="/"
@@ -122,7 +122,7 @@ export function SiteHeader() {
         <nav className="border-t-2 border-ink bg-paper md:hidden" aria-label="Menu">
           {[
             { label: 'Home', id: '' },
-            { label: 'The Archive', id: 'archive' },
+            { label: 'Urban Ledger', id: 'archive' },
             { label: 'Grading', id: 'grading' },
             { label: 'Drop Alerts', id: 'drops' },
           ].map((item) => (
