@@ -56,22 +56,22 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b-2 border-ink bg-paper/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" onClick={toTop} className="group flex items-center gap-3">
+        <Link to="/" onClick={toTop} className="group flex shrink-0 items-center gap-3">
           <LogoMark />
           <span className="flex items-baseline gap-1.5">
             <span className="font-display text-2xl sm:text-3xl">ABC</span>
             <span className="text-xs font-medium italic sm:text-sm">is for</span>
             <span className="font-display text-2xl sm:text-3xl">XYZ</span>
           </span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-ink/60 xl:inline">
+          <span className="hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-widest text-ink/60 min-[1500px]:inline">
             A–Z curated vintage + modern finds • Built for repeat buyers
           </span>
         </Link>
-        <nav className="flex items-center gap-1 text-sm font-bold uppercase sm:gap-2">
+        <nav className="flex shrink-0 items-center gap-1 text-sm font-bold uppercase sm:gap-2">
           <Link
             to="/"
             onClick={toTop}
-            className="hidden rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
+            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
           >
             Home
           </Link>
@@ -79,7 +79,7 @@ export function SiteHeader() {
             to="/"
             hash="archive"
             onClick={toSection('archive')}
-            className="hidden rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
+            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
           >
             Urban Ledger
           </Link>
@@ -87,7 +87,7 @@ export function SiteHeader() {
             to="/"
             hash="grading"
             onClick={toSection('grading')}
-            className="hidden rounded-full px-3 py-2 hover:bg-ink hover:text-paper md:block"
+            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper md:block"
           >
             Grading
           </Link>
@@ -95,7 +95,7 @@ export function SiteHeader() {
             to="/"
             hash="drops"
             onClick={toSection('drops')}
-            className="hidden rounded-full px-3 py-2 hover:bg-ink hover:text-paper md:block"
+            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper md:block"
           >
             Drop Alerts
           </Link>
@@ -103,7 +103,7 @@ export function SiteHeader() {
             href={DEPOP_SHOP_URL}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1 rounded-full border-2 border-ink bg-signal px-3 py-2 text-xs text-paper sm:px-4 sm:text-sm shadow-[3px_3px_0_var(--color-ink)] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--color-ink)]"
+            className="flex items-center gap-1 whitespace-nowrap rounded-full border-2 border-ink bg-signal px-3 py-2 text-xs text-paper sm:px-4 sm:text-sm shadow-[3px_3px_0_var(--color-ink)] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--color-ink)]"
           >
             Shop Depop <ArrowUpRight className="size-4" />
           </a>
