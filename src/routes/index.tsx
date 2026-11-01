@@ -20,12 +20,29 @@ const KINDS: Array<{ id: Kind; color: string }> = [
   { id: 'Bags', color: 'bg-lilac text-ink' },
   { id: 'Clothing', color: 'bg-sole text-ink' },
 ]
+const LETTER_SIZE = /^(xxs|xs|s|m|l|xl|xxl|xxxl|one size|os|small|medium|large)$/i
+const SHOE_WORDS =
+  /shoe|sneaker|boot|loafer|sandal|heel|pump|oxford|slide|clog|trainer|cleat|slipper|mule|dunk|jordan|air max|air force|gazelle|samba|chuck taylor|yeezy/
+const BAG_WORDS =
+  /(?<!dust )(?<!shoe )(?<!shoes )\b(?:bag|purse|handbag|tote|crossbody|cross body|clutch|satchel|backpack|wallet|pouch|duffle|duffel|hobo|baguette|wristlet|messenger|luggage|suitcase|fanny pack|belt bag)\b/
+const CLOTHING_WORDS =
+  /\b(?:shirt|t-shirt|tee|hoodie|sweatshirt|crewneck|jacket|coat|parka|puffer|bomber|anorak|windbreaker|fleece|pullover|quarter zip|henley|flannel|jeans|pants|trousers|slacks|chinos|cargo|joggers|sweatpants|leggings|tights|shorts|skirt|skort|dress|romper|jumpsuit|overalls|bodysuit|blouse|sweater|cardigan|vest|jersey|tracksuit|sweatsuit|blazer|beanie|scarf|gloves|bra|swimsuit|bikini|pajamas|robe|tank top|crop top)\b/
 const kindOf = (p: Product): Kind => {
   const category: string = p.category
   const brand: string = p.brand
   // Bag brands always count as bags, even if the item was left on the default category
   if (brand === 'Coach' || brand === 'Vera Bradley') return 'Bags'
-  return category === 'Boots' ? 'Boots' : category === 'Bags' ? 'Bags' : category === 'Clothing' ? 'Clothing' : 'Sneakers'
+  if (category === 'Boots') return 'Boots'
+  if (category === 'Bags') return 'Bags'
+  if (category === 'Clothing') return 'Clothing'
+  // Items left on a shoe category: clothing and bags are spotted by their size and their name
+  if (LETTER_SIZE.test(p.size.trim())) return 'Clothing'
+  const name = p.name.toLowerCase()
+  if (!SHOE_WORDS.test(name)) {
+    if (BAG_WORDS.test(name)) return 'Bags'
+    if (CLOTHING_WORDS.test(name)) return 'Clothing'
+  }
+  return 'Sneakers'
 }
 
 type Sort = 'featured' | 'price-asc' | 'price-desc' | 'condition'
@@ -77,8 +94,8 @@ function Home() {
         id: b as Brand,
         label: b as string,
         count: inKind.filter((p) => p.brand === b && (showSold || !p.sold)).length,
-      })).filter((b) => b.count > 0),
-    [inKind, showSold],
+      })).filter((b) => b.count > 0 && !(kind === 'Sneakers' && b.id === 'Other')),
+    [inKind, showSold, kind],
   )
   const sizes = useMemo(() => {
     const seen = new Map<string, Product>()
