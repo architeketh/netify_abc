@@ -110,11 +110,13 @@ function ProductPage() {
             </span>
           </div>
 
-          <dl className="mt-6 grid grid-cols-2 border-2 border-ink">
+          <dl className={`mt-6 grid border-2 border-ink ${sizeLong(product) ? 'grid-cols-2' : 'grid-cols-1'}`}>
             {[
-                      ['Size', sizeLong(product)],
+              ['Size', sizeLong(product)],
               ['Condition', product.condition],
-            ].map(([k, v], i) => (
+            ]
+              .filter(([, v]) => v)
+              .map(([k, v], i) => (
               <div key={k} className={`p-3 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
                 <dt className="font-mono text-[10px] uppercase tracking-widest text-ink/60">{k}</dt>
                 <dd className="font-display mt-1 text-base">{v}</dd>
