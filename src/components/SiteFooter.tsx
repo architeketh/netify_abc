@@ -13,7 +13,7 @@ export function SiteFooter() {
           className="group block"
         >
           <p className="font-mono text-xs uppercase tracking-widest text-paper/60">
-            Every pair lives on Depop →
+            Every find lives on Depop →
           </p>
           <p className="font-display mt-3 text-[7vw] transition group-hover:text-signal sm:text-7xl lg:text-8xl">
             @abc_isfor_xyz

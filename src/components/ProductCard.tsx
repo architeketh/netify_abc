@@ -47,9 +47,11 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
               Sold
             </span>
           )}
-          <span className="absolute bottom-2 right-2 rounded-full border-2 border-ink bg-paper px-2 py-0.5 font-mono text-[11px] font-bold">
-            {sizeShort(product)}
-          </span>
+          {sizeShort(product) && (
+            <span className="absolute bottom-2 right-2 rounded-full border-2 border-ink bg-paper px-2 py-0.5 font-mono text-[11px] font-bold">
+              {sizeShort(product)}
+            </span>
+          )}
         </div>
 
         <div className="p-2.5 sm:p-4">
