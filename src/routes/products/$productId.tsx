@@ -38,7 +38,7 @@ export const Route = createFileRoute('/products/$productId')({
         hash="archive"
         className="mt-8 inline-block border-2 border-ink bg-ink px-6 py-3 font-bold uppercase text-paper"
       >
-        Back to the archive
+        Back to Urban Ledger
       </Link>
     </div>
   ),
@@ -61,7 +61,7 @@ function ProductPage() {
         hash="archive"
         className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest hover:text-signal"
       >
-        <ArrowLeft className="size-4" /> Back to the archive
+        <ArrowLeft className="size-4" /> Back to Urban Ledger
       </Link>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.1fr_1fr]">
@@ -104,7 +104,7 @@ function ProductPage() {
           <p className="mt-2 text-base text-ink/70">{product.colorway}</p>
 
           <div className="mt-5 flex items-end gap-4">
-            <span className="font-display text-2xl">${formatPrice(product.price)}</span>
+            <span className="text-2xl font-medium">${formatPrice(product.price)}</span>
             <span className="mb-2 font-mono text-xs uppercase tracking-widest text-ink/60">
               USD · via Depop
             </span>
@@ -161,7 +161,7 @@ function ProductPage() {
 
       {related.length > 0 && (
         <section className="mt-28">
-          <h2 className="font-display text-3xl">Also in the archive</h2>
+          <h2 className="font-display text-3xl">Also in Urban Ledger</h2>
           <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} index={products.indexOf(p)} />
