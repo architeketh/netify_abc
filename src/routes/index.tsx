@@ -120,14 +120,14 @@ function Home() {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink/60">
               A–Z curated vintage + modern finds • Built for repeat buyers
             </p>
-            <h1 className="font-display mt-5 text-[15vw] sm:text-6xl lg:text-8xl">
+            <h1 className="font-display mt-5 text-[13vw] sm:text-6xl lg:text-8xl">
               Vintage
               <br />
               <span className="text-outline">+ modern</span>
               <br />
               <span className="text-signal">A to Z.</span>
             </h1>
-            <p className="mt-8 max-w-md text-lg leading-relaxed text-ink/80">
+            <p className="mt-6 max-w-md text-base leading-relaxed text-ink/80 sm:mt-8 sm:text-lg">
               Vintage and modern sneakers, boots, bags and clothing — cleaned, graded and honest
               about every crease. One of one, so when it's gone, it's gone.
             </p>
@@ -179,7 +179,7 @@ function Home() {
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1}>
               {TICKER.map((t) => (
-                <span key={t} className="font-display flex items-center gap-6 px-6 text-3xl">
+                <span key={t} className="font-display flex items-center gap-4 px-4 text-xl sm:gap-6 sm:px-6 sm:text-3xl">
                   {t} <Sparkles className="size-5" />
                 </span>
               ))}
@@ -196,7 +196,7 @@ function Home() {
               Current drop · {products.filter((p) => !p.sold).length} for sale
               {products.some((p) => p.sold) && ` · ${products.filter((p) => p.sold).length} sold`}
             </p>
-            <h2 className="font-display mt-3 text-5xl sm:text-6xl">The Archive</h2>
+            <h2 className="font-display mt-3 text-4xl sm:text-6xl">The Archive</h2>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
             <label className="col-span-2 flex min-h-11 items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase sm:col-span-1">
@@ -254,7 +254,7 @@ function Home() {
                   setBrand('all')
                   setSize('all')
                 }}
-                className={`font-display flex min-h-11 shrink-0 items-center gap-2 rounded-full border-2 border-ink px-5 py-2 text-xl transition ${
+                className={`font-display flex min-h-11 shrink-0 items-center gap-2 rounded-full border-2 border-ink px-3.5 py-1.5 text-base transition sm:px-5 sm:py-2 sm:text-xl ${
                   active ? `${k.color} shadow-[3px_3px_0_var(--color-ink)]` : 'bg-paper hover:bg-paper-deep'
                 }`}
               >
@@ -276,11 +276,11 @@ function Home() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => setBrand(e.id)}
-                className={`group relative flex min-w-[7.5rem] shrink-0 flex-col items-start gap-1 p-4 pt-8 text-left transition sm:min-w-0 ${
+                className={`group relative flex min-w-[6rem] shrink-0 flex-col items-start gap-1 p-3 pt-7 text-left sm:p-4 sm:pt-8 transition sm:min-w-0 ${
                   active ? 'bg-ink text-paper' : 'bg-paper hover:bg-paper-deep'
                 }`}
               >
-                <span className="font-display text-3xl">{e.label}</span>
+                <span className="font-display text-xl leading-tight sm:text-3xl">{e.label}</span>
                 <span
                   className={`absolute right-3 top-3 font-mono text-xs ${active ? 'text-volt' : 'text-ink/50'}`}
                 >
@@ -304,7 +304,7 @@ function Home() {
         ) : (
           <div className="mt-12 grid place-items-center border-2 border-dashed border-ink/40 px-6 py-20 text-center">
             <Search className="size-8" />
-            <p className="font-display mt-4 text-4xl">Nothing matches — yet.</p>
+            <p className="font-display mt-4 text-3xl sm:text-4xl">Nothing matches — yet.</p>
             <p className="mt-2 max-w-sm text-ink/70">
               New finds land every week. Sign up for drop alerts and we'll ping you when your size
               shows up.
@@ -320,7 +320,7 @@ function Home() {
             <button
               type="button"
               onClick={() => setLimit((n) => n + PAGE_SIZE)}
-              className="min-h-12 border-2 border-ink bg-paper px-8 py-3 font-display text-2xl shadow-[4px_4px_0_var(--color-ink)] active:translate-y-0.5"
+              className="min-h-12 border-2 border-ink bg-paper px-6 py-3 font-display text-xl sm:px-8 sm:text-2xl shadow-[4px_4px_0_var(--color-ink)] active:translate-y-0.5"
             >
               Show more ({visible.length - limit} left)
             </button>
@@ -332,10 +332,10 @@ function Home() {
             href={DEPOP_SHOP_URL}
             target="_blank"
             rel="noreferrer"
-            className="group flex items-center gap-3 border-2 border-ink bg-volt px-8 py-4 font-display text-3xl shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
+            className="group flex items-center gap-3 border-2 border-ink bg-volt px-5 py-3 font-display text-xl sm:px-8 sm:py-4 sm:text-3xl shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
           >
             See every listing on Depop
-            <ArrowUpRight className="size-7 transition group-hover:rotate-45" />
+            <ArrowUpRight className="size-5 transition sm:size-7 group-hover:rotate-45" />
           </a>
         </div>
       </section>
@@ -346,7 +346,7 @@ function Home() {
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1}>
               {['Sneakers', 'Boots', 'Bags', 'Clothing', 'Sneakers', 'Boots', 'Bags', 'Clothing'].map((t, i) => (
-                <span key={i} className="font-display px-6 text-5xl">
+                <span key={i} className="font-display px-4 text-3xl sm:px-6 sm:text-5xl">
                   {i % 2 === 0 ? t : <span className="text-outline [-webkit-text-stroke-color:var(--color-paper)]">{t}</span>}
                 </span>
               ))}
@@ -362,10 +362,10 @@ function Home() {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink/60">
               No surprises
             </p>
-            <h2 className="font-display mt-3 text-5xl sm:text-6xl">
+            <h2 className="font-display mt-3 text-4xl sm:text-6xl">
               Graded <span className="text-signal">honest.</span>
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/80">
+            <p className="mt-6 max-w-md text-base leading-relaxed text-ink/80 sm:text-lg">
               Vintage is never perfect — that's the point. Every pair gets a hands-on inspection
               and a condition label that matches Depop's, so you know exactly how much life (and
               story) is left in them.
@@ -398,7 +398,7 @@ function Home() {
                 <Icon className="size-8" />
                 <span className="font-mono text-xs text-ink/50">0{i + 1}</span>
               </div>
-              <p className="font-display mt-6 text-3xl">{title}</p>
+              <p className="font-display mt-6 text-2xl sm:text-3xl">{title}</p>
               <p className="mt-2 text-ink/70">{copy}</p>
             </div>
           ))}
@@ -410,12 +410,12 @@ function Home() {
         <div className="grid gap-10 border-2 border-ink bg-ink p-6 text-paper sm:p-10 lg:grid-cols-2 lg:p-14">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-volt">Drop alerts</p>
-            <h2 className="font-display mt-3 text-5xl sm:text-6xl">
+            <h2 className="font-display mt-3 text-4xl sm:text-6xl">
               Your size.
               <br />
               <span className="text-signal">First dibs.</span>
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-paper/80">
+            <p className="mt-6 max-w-md text-base leading-relaxed text-paper/80 sm:text-lg">
               The good pairs go fast. Tell us your size and the brands you love, and we'll give you
               a heads up before new finds hit the Depop feed. Got a grail? Tell us — we'll keep an
               eye out.
