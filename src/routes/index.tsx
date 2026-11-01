@@ -136,7 +136,7 @@ function Home() {
                 href="#archive"
                 className="flex items-center gap-2 border-2 border-ink bg-ink px-6 py-3 font-bold uppercase text-paper shadow-[4px_4px_0_var(--color-signal)] transition hover:-translate-y-0.5"
               >
-                Dig the archive <ArrowDown className="size-4" />
+                Urban Ledger <ArrowDown className="size-4" />
               </a>
               <a
                 href={DEPOP_SHOP_URL}
@@ -188,7 +188,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Archive */}
+      {/* Urban Ledger (the shop list) */}
       <section id="archive" className="scroll-mt-20 mx-auto max-w-7xl px-4 pt-20 sm:px-6">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
@@ -196,18 +196,10 @@ function Home() {
               Current drop · {products.filter((p) => !p.sold).length} for sale
               {products.some((p) => p.sold) && ` · ${products.filter((p) => p.sold).length} sold`}
             </p>
-            <h2 className="font-display mt-3 text-4xl sm:text-6xl">The Archive</h2>
+            <h2 className="font-display mt-3 text-4xl sm:text-6xl">Urban Ledger</h2>
           </div>
+          <div>
           <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
-            <label className="col-span-2 flex min-h-11 items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase sm:col-span-1">
-              <input
-                type="checkbox"
-                checked={showSold}
-                onChange={(e) => setShowSold(e.target.checked)}
-                className="size-4 accent-ink"
-              />
-              Show sold
-            </label>
             <label className="flex min-h-11 items-center gap-2 border-2 border-ink bg-paper px-3 py-2 text-sm font-bold uppercase">
               Size
               <select
@@ -236,6 +228,16 @@ function Home() {
                 <option value="price-desc">Price ↓</option>
               </select>
             </label>
+          </div>
+          <label className="mt-3 flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-ink/60">
+            <input
+              type="checkbox"
+              checked={showSold}
+              onChange={(e) => setShowSold(e.target.checked)}
+              className="size-3.5 accent-ink"
+            />
+            Show sold
+          </label>
           </div>
         </div>
 
