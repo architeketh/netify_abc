@@ -256,7 +256,7 @@ function Home() {
                   setBrand('all')
                   setSize('all')
                 }}
-                className={`font-display flex min-h-11 shrink-0 items-center gap-2 rounded-full border-2 border-ink px-3.5 py-1.5 text-base transition sm:px-5 sm:py-2 sm:text-xl ${
+                className={`flex min-h-11 shrink-0 items-center gap-2 rounded-full border-2 border-ink px-3.5 py-1.5 text-sm font-bold uppercase tracking-wide transition sm:px-5 sm:py-2 sm:text-base ${
                   active ? `${k.color} shadow-[3px_3px_0_var(--color-ink)]` : 'bg-paper hover:bg-paper-deep'
                 }`}
               >
@@ -282,7 +282,7 @@ function Home() {
                   active ? 'bg-ink text-paper' : 'bg-paper hover:bg-paper-deep'
                 }`}
               >
-                <span className="font-display text-xl leading-tight sm:text-3xl">{e.label}</span>
+                <span className="text-base font-bold uppercase leading-tight tracking-wide sm:text-xl">{e.label}</span>
                 <span
                   className={`absolute right-3 top-3 font-mono text-xs ${active ? 'text-volt' : 'text-ink/50'}`}
                 >
