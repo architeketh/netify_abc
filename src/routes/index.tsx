@@ -151,7 +151,7 @@ function Home() {
                 href="#archive"
                 className="whitespace-nowrap rounded-full bg-signal px-4 py-3.5 text-[14px] sm:px-6 sm:text-[15px] font-bold text-white hover:bg-ink"
               >
-                Browse Urban Closet
+                Browse the closet
               </a>
               <a
                 href={DEPOP_SHOP_URL}
@@ -164,30 +164,46 @@ function Home() {
             </div>
           </div>
           <div className="hidden flex-1 basis-48 justify-center md:flex">
-            <img
-              src="/img/logo.png"
-              alt="ABC is for XYZ logo"
-              width={480}
-              height={480}
-              className="spin-slow size-60 rounded-full"
-            />
+            {/* Turntable: the logo is the record */}
+            <div
+              className="relative size-[21rem] shrink-0 rounded-2xl bg-[#2b2622] shadow-xl ring-1 ring-black/20"
+              aria-hidden="true"
+            >
+              <div className="absolute left-1/2 top-1/2 size-[15.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#14110f] ring-2 ring-[#4a433c]" />
+              <img
+                src="/img/logo.png"
+                alt="ABC is for XYZ logo"
+                width={480}
+                height={480}
+                className="spin-record absolute left-1/2 top-1/2 size-60 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg"
+              />
+              <div className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d8d2c8] ring-1 ring-[#8a8279]" />
+              <div className="absolute right-[18px] top-[18px] size-9 rounded-full bg-[#4a433c] ring-2 ring-[#6b6259]" />
+              <div className="absolute left-[296px] top-[40px] -ml-[2.5px] h-[104px] w-[5px] origin-top rotate-[45deg] rounded bg-[#cfc8bd]">
+                <div className="absolute -bottom-1 -left-[4px] h-4 w-[13px] rounded-sm bg-[#e8e1d6]" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Urban Closet (the shop list) */}
+      {/* Closet (the shop list) */}
       <section id="archive" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-10 sm:px-8 sm:pt-12">
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
-          <h2 className="font-display text-4xl sm:text-[2.5rem]" aria-label="Urban Closet">
-            <span aria-hidden="true">Urban </span>
+          <h2 className="text-4xl tracking-tight sm:text-[2.5rem]" aria-label="abcisforxyz closet">
             <span aria-hidden="true">
+              <span className="font-extrabold">abc</span>
+              <span className="font-normal">isfor</span>
+              <span className="font-extrabold">xyz</span>{' '}
+            </span>
+            <span aria-hidden="true" className="font-extrabold">
               {[
-                ['C', 'text-clay'],
-                ['L', 'text-[#b8920a]'],
-                ['O', 'text-[#0a8fa8]'],
-                ['S', 'text-olive'],
-                ['E', 'text-[#8a55c0]'],
-                ['T', 'text-signal'],
+                ['c', 'text-clay'],
+                ['l', 'text-[#b8920a]'],
+                ['o', 'text-[#0a8fa8]'],
+                ['s', 'text-olive'],
+                ['e', 'text-[#8a55c0]'],
+                ['t', 'text-signal'],
               ].map(([letter, color]) => (
                 <span key={letter} className={color}>
                   {letter}
