@@ -158,7 +158,7 @@ function Home() {
                 href="#archive"
                 className="flex items-center gap-2 border-2 border-ink bg-ink px-6 py-3 font-bold uppercase text-paper shadow-[4px_4px_0_var(--color-signal)] transition hover:-translate-y-0.5"
               >
-                Urban Ledger <ArrowDown className="size-4" />
+                Urban Closet <ArrowDown className="size-4" />
               </a>
               <a
                 href={DEPOP_SHOP_URL}
@@ -210,7 +210,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Urban Ledger (the shop list) */}
+      {/* Urban Closet (the shop list) */}
       <section id="archive" className="scroll-mt-20 mx-auto max-w-7xl px-4 pt-20 sm:px-6">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
@@ -218,7 +218,23 @@ function Home() {
               Current drop · {products.filter((p) => !p.sold).length} for sale
               {products.some((p) => p.sold) && ` · ${products.filter((p) => p.sold).length} sold`}
             </p>
-            <h2 className="font-display mt-3 text-4xl sm:text-6xl">Urban Ledger</h2>
+            <h2 className="font-display mt-3 text-4xl sm:text-6xl" aria-label="Urban Closet">
+              <span aria-hidden="true">Urban </span>
+              <span aria-hidden="true">
+                {[
+                  ['C', 'text-clay'],
+                  ['L', 'text-volt'],
+                  ['O', 'text-sole'],
+                  ['S', 'text-olive'],
+                  ['E', 'text-lilac'],
+                  ['T', 'text-signal'],
+                ].map(([letter, color]) => (
+                  <span key={letter} className={color}>
+                    {letter}
+                  </span>
+                ))}
+              </span>
+            </h2>
           </div>
           <div>
           <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
