@@ -53,7 +53,7 @@ function Home() {
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
-  const [showSold, setShowSold] = useState(true)
+  const [showSold, setShowSold] = useState(false)
   const [limit, setLimit] = useState(PAGE_SIZE)
   const query = useSearchQuery().trim().toLowerCase()
   // Start from the first batch again whenever a filter changes
@@ -146,10 +146,10 @@ function Home() {
               Sneakers, boots, bags and clothing — cleaned, graded and honest about every crease.
               One of one, so when it's gone, it's gone.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex gap-2 sm:gap-3">
               <a
                 href="#archive"
-                className="rounded-full bg-signal px-6 py-3.5 text-[15px] font-bold text-white hover:bg-ink"
+                className="whitespace-nowrap rounded-full bg-signal px-4 py-3.5 text-[14px] sm:px-6 sm:text-[15px] font-bold text-white hover:bg-ink"
               >
                 Browse Urban Closet
               </a>
@@ -157,7 +157,7 @@ function Home() {
                 href={DEPOP_SHOP_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 rounded-full border-[1.5px] border-ink bg-white px-6 py-3 text-[15px] font-bold hover:bg-ink hover:text-white"
+                className="flex items-center gap-1 whitespace-nowrap rounded-full border-[1.5px] border-ink bg-white px-4 py-3 text-[14px] sm:gap-1.5 sm:px-6 sm:text-[15px] font-bold hover:bg-ink hover:text-white"
               >
                 Shop on Depop <ArrowUpRight className="size-4" />
               </a>
