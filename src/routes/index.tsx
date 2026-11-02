@@ -191,13 +191,13 @@ function Home() {
       {/* Closet (the shop list) */}
       <section id="archive" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-10 sm:px-8 sm:pt-12">
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
-          <h2 className="text-4xl tracking-tight sm:text-[2.5rem]" aria-label="abcisforxyz closet">
+          <h2 className="font-display text-4xl sm:text-[2.5rem]" aria-label="ABC is for XYZ closet">
+            <span aria-hidden="true" className="inline-flex items-baseline gap-1.5 whitespace-nowrap">
+              <span>ABC</span>
+              <span className="font-sans text-lg font-medium italic sm:text-xl">is for</span>
+              <span>XYZ</span>
+            </span>{' '}
             <span aria-hidden="true">
-              <span className="font-extrabold">abc</span>
-              <span className="font-normal">isfor</span>
-              <span className="font-extrabold">xyz</span>{' '}
-            </span>
-            <span aria-hidden="true" className="font-extrabold">
               {[
                 ['c', 'text-clay'],
                 ['l', 'text-[#b8920a]'],
