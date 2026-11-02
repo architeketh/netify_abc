@@ -71,6 +71,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xyx-85m-new-adidas-daily-30-d9a5/',
+    tag: 'Just In',
   },
   {
     id: '8m-new-adidas-daily-30-863e',
@@ -88,6 +89,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfcr_xyz-8m-new-adidas-daily-30-863e/',
+    tag: 'Just In',
   },
   {
     id: '13m-new-reebok-classic-leather-fb30',
@@ -294,7 +296,6 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xya-8w-new-nike-dunk-low-a83c/',
-    tag: 'Hot',
   },
   {
     id: '85w-new-nike-dunk-low-0e2f',
@@ -585,6 +586,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_oyz-85w-new-adidas-break-start-f115/',
+    tag: 'Just In',
   },
   {
     id: '8w-new-adidas-break-start-719e',
@@ -602,6 +604,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_xsfor_xyz-8w-new-adidas-break-start-719e/',
+    tag: 'Just In',
   },
   {
     id: '6m-7w-new-adidas-nizza-ac02',
@@ -979,6 +982,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc0isfor_xyz-8m-95w-new-adidas-trae-68bf/',
+    tag: 'Hot',
   },
   {
     id: '105w-wide-new-new-balance-6379',
@@ -1217,6 +1221,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isror_xyz-7y-new-puma-speedcat-ballet-094f/',
+    tag: 'Just In',
   },
   {
     id: '35y-converse-chuck-taylor-all-5577',
@@ -2067,7 +2072,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xyz-new-in-box-pink-jordan-47d9/',
-    tag: 'Hot',
+    tag: 'Just In',
   },
   {
     id: '4y-55w-new-nike-jordan-0b55',
@@ -2102,6 +2107,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isforixyz-85w-rare-sold-out-womens-a758/',
+    tag: 'Rare',
   },
   {
     id: '7y-85w-jordan-session-gs-2d2c',
@@ -2222,6 +2228,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xyz-7y-85w-new-timberland-stone-02fa/',
+    tag: 'Just In',
   },
   {
     id: '7y-85w-new-timberland-stone-1f41',
@@ -2239,6 +2246,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfmr_xyz-7y-85w-new-timberland-stone-1f41/',
+    tag: 'Just In',
   },
   {
     id: '6w-new-timberland-brimfield-mid-9c41',
