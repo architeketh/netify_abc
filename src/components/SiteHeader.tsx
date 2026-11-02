@@ -59,7 +59,7 @@ export function SiteHeader() {
           <form
             role="search"
             onSubmit={search}
-            className="relative order-last w-full md:order-none md:max-w-xl md:flex-1"
+            className="relative hidden md:block md:max-w-xl md:flex-1"
           >
             <label className="sr-only" htmlFor="shop-search">
               Search the shop
