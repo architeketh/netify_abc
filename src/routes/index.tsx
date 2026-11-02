@@ -163,13 +163,13 @@ function Home() {
               </a>
             </div>
           </div>
-          <div className="flex flex-1 basis-48 justify-center">
+          <div className="hidden flex-1 basis-48 justify-center md:flex">
             <img
               src="/img/logo.png"
               alt="ABC is for XYZ logo"
               width={480}
               height={480}
-              className="spin-slow size-44 rounded-full sm:size-60"
+              className="spin-slow size-60 rounded-full"
             />
           </div>
         </div>
