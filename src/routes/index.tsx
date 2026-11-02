@@ -63,8 +63,13 @@ const PAGE_SIZE = 24
 const sizeKey = (p: Product) => `${p.sizeType}|${p.size}`
 
 function Home() {
-  // Main photo: the first pair for sale. To use your own photo instead, replace this with '/img/hero.png'.
-  const heroImage = (products.find((p) => !p.sold) ?? products[0])?.image ?? '/img/hero.png'
+  // Main photo: the pair tagged "Hero" in the manage page. If none is tagged (or it is sold), the first pair for sale is used.
+  const heroImage =
+    (
+      products.find((p) => p.tag === 'Hero' && !p.sold) ??
+      products.find((p) => !p.sold) ??
+      products[0]
+    )?.image ?? '/img/hero.png'
   const [kind, setKind] = useState<Kind | 'all'>('all')
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
