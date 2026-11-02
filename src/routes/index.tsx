@@ -45,10 +45,7 @@ const kindOf = (p: Product): Kind => {
   return 'Sneakers'
 }
 
-type Sort = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'condition'
-
-// Date a pair was added in the manage page (pairs added before this feature have none)
-const addedOn = (p: Product) => (p as { added?: string }).added ?? ''
+type Sort = 'featured' | 'just-in' | 'price-asc' | 'price-desc' | 'condition'
 
 const TICKER = [
   'Hand-picked vintage',
@@ -128,8 +125,8 @@ function Home() {
         (showSold || !p.sold),
     )
     const sorted = [...list]
-    // newest first; pairs with no date keep their list order and come after the dated ones
-    if (sort === 'newest') sorted.sort((a, b) => addedOn(b).localeCompare(addedOn(a)))
+    // pairs tagged "Just In" in the manage page come first; everything else keeps its list order
+    if (sort === 'just-in') sorted.sort((a, b) => Number(b.tag === 'Just In') - Number(a.tag === 'Just In'))
     if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price)
     if (sort === 'price-desc') sorted.sort((a, b) => b.price - a.price)
     if (sort === 'condition')
@@ -266,7 +263,7 @@ function Home() {
                 className="bg-transparent font-mono focus:outline-none"
               >
                 <option value="featured">Featured</option>
-                <option value="newest">Newest first</option>
+                <option value="just-in">Just in</option>
                 <option value="condition">Best condition</option>
                 <option value="price-asc">Price ↑</option>
                 <option value="price-desc">Price ↓</option>
