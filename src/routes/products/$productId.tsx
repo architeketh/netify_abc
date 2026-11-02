@@ -29,14 +29,14 @@ export const Route = createFileRoute('/products/$productId')({
   }),
   notFoundComponent: () => (
     <div className="mx-auto max-w-3xl px-4 py-32 text-center">
-      <p className="font-display text-8xl">Gone.</p>
-      <p className="mt-4 text-lg text-ink/70">
-        That pair has already walked off. Plenty more where it came from.
+      <p className="font-display text-7xl">Gone.</p>
+      <p className="mt-4 text-lg text-muted">
+        That one has already walked off. Plenty more where it came from.
       </p>
       <Link
         to="/"
         hash="archive"
-        className="mt-8 inline-block border-2 border-ink bg-ink px-6 py-3 font-bold uppercase text-paper"
+        className="mt-8 inline-block rounded-full bg-ink px-6 py-3 font-bold text-white hover:bg-signal"
       >
         Back to Urban Closet
       </Link>
@@ -46,27 +46,28 @@ export const Route = createFileRoute('/products/$productId')({
 
 function ProductPage() {
   const product = Route.useLoaderData()
-  const index = products.indexOf(product)
-  const catalogNo = `ARC-${String(index + 1).padStart(3, '0')}`
   const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null)
 
   const related = products
     .filter((p) => p.id !== product.id && (p.brand === product.brand || p.category === product.category))
     .slice(0, 4)
 
+  const size = sizeLong(product)
+  const brand = product.brand === 'Other' ? '' : product.brand
+
   return (
-    <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
+    <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-8">
       <Link
         to="/"
         hash="archive"
-        className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest hover:text-signal"
+        className="inline-flex items-center gap-2 text-sm font-bold hover:text-signal"
       >
         <ArrowLeft className="size-4" /> Back to Urban Closet
       </Link>
 
-      <div className="mt-6 grid gap-10 lg:grid-cols-[1.1fr_1fr]">
+      <div className="mt-5 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
         <div
-          className="relative aspect-[4/5] cursor-zoom-in overflow-hidden border-2 border-ink bg-paper-deep shadow-[10px_10px_0_var(--color-ink)]"
+          className="relative aspect-[4/5] cursor-zoom-in overflow-hidden rounded-2xl bg-soft"
           onMouseMove={(e) => {
             const r = e.currentTarget.getBoundingClientRect()
             setZoom({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 })
@@ -78,68 +79,74 @@ function ProductPage() {
             srcSet={isRemote(product.image) ? undefined : srcSet(product.image, [600, 900, 1400])}
             referrerPolicy="no-referrer"
             sizes="(min-width: 1024px) 55vw, 100vw"
-            alt={`${product.name} in ${product.colorway}`}
-            className={`h-full w-full object-cover transition-transform duration-200 ${product.sold ? 'grayscale' : ''}`}
+            alt={product.colorway ? `${product.name} in ${product.colorway}` : product.name}
+            className="h-full w-full object-cover transition-transform duration-200"
             style={
               zoom
                 ? { transform: 'scale(1.8)', transformOrigin: `${zoom.x}% ${zoom.y}%` }
                 : undefined
             }
           />
-          {product.tag && product.tag !== 'Hero' && (
-            <span className="absolute left-4 top-4 -rotate-3 border-2 border-ink bg-volt px-3 py-1 font-mono text-xs font-bold uppercase">
+          {product.tag && product.tag !== 'Hero' && !product.sold && (
+            <span className="absolute left-4 top-4 rounded-md bg-ink px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
               {product.tag}
+            </span>
+          )}
+          {product.sold && (
+            <span className="absolute inset-0 grid place-items-center bg-white/60">
+              <span className="rounded-full bg-ink px-6 py-2 text-sm font-bold uppercase tracking-wider text-white">
+                Sold
+              </span>
             </span>
           )}
         </div>
 
-        <div className="lg:pt-4">
-          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink/60">
-            <span className="tag-hole">{catalogNo}</span>
-            <span>
-              {product.brand} · {product.category}
-            </span>
-          </div>
-          <h1 className="mt-4 text-lg font-medium leading-snug sm:text-xl">{product.name}</h1>
-          <p className="mt-2 text-base text-ink/70">{product.colorway}</p>
+        <div className="lg:pt-2">
+          <p className="text-sm text-muted">
+            {[brand, product.category].filter(Boolean).join(' · ')}
+          </p>
+          <h1 className="mt-2 text-xl font-bold leading-snug sm:text-2xl">{product.name}</h1>
+          {product.colorway && <p className="mt-1.5 text-base text-muted">{product.colorway}</p>}
 
-          <div className="mt-5 flex items-end gap-4">
-            <span className="text-2xl font-medium">${formatPrice(product.price)}</span>
-            <span className="mb-2 font-mono text-xs uppercase tracking-widest text-ink/60">
-              USD · via Depop
-            </span>
+          <div className="mt-5 flex items-baseline gap-3">
+            <span className="text-3xl font-bold">${formatPrice(product.price)}</span>
+            <span className="text-sm text-muted">USD · via Depop</span>
           </div>
 
-          <dl className={`mt-6 grid border-2 border-ink ${sizeLong(product) ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          <dl className={`mt-6 grid overflow-hidden rounded-xl border border-line ${size ? 'grid-cols-2' : 'grid-cols-1'}`}>
             {[
-              ['Size', sizeLong(product)],
+              ['Size', size],
               ['Condition', product.condition],
             ]
               .filter(([, v]) => v)
               .map(([k, v], i) => (
-              <div key={k} className={`p-3 ${i > 0 ? 'border-l-2 border-ink' : ''}`}>
-                <dt className="font-mono text-[10px] uppercase tracking-widest text-ink/60">{k}</dt>
-                <dd className="font-display mt-1 text-base">{v}</dd>
-              </div>
-            ))}
+                <div key={k} className={`p-4 ${i > 0 ? 'border-l border-line' : ''}`}>
+                  <dt className="text-xs text-muted">{k}</dt>
+                  <dd className="mt-1 text-base font-bold">{v}</dd>
+                </div>
+              ))}
           </dl>
 
-          <div className="mt-6">
+          <div className="mt-5">
             <ConditionMeter condition={product.condition} showLabel={false} />
           </div>
 
-          <p className="mt-6 text-sm leading-relaxed text-ink/80">{product.description}</p>
+          {product.description && (
+            <p className="mt-6 text-sm leading-relaxed text-[#3b3632]">{product.description}</p>
+          )}
 
-          <ul className="mt-6 space-y-2">
-            {product.details.map((d) => (
-              <li key={d} className="flex items-center gap-3">
-                <Check className="size-4 text-signal" /> {d}
-              </li>
-            ))}
-          </ul>
+          {product.details.length > 0 && (
+            <ul className="mt-5 space-y-2 text-sm">
+              {product.details.map((d) => (
+                <li key={d} className="flex items-center gap-3">
+                  <Check className="size-4 text-signal" /> {d}
+                </li>
+              ))}
+            </ul>
+          )}
 
           {product.sold ? (
-            <p className="font-display mt-10 border-2 border-ink p-5 text-center text-2xl">
+            <p className="mt-8 rounded-full border-[1.5px] border-ink px-6 py-3.5 text-center text-base font-bold">
               Sold — sorry!
             </p>
           ) : (
@@ -147,24 +154,24 @@ function ProductPage() {
               href={product.depopUrl}
               target="_blank"
               rel="noreferrer"
-              className="group mt-8 flex items-center justify-center gap-3 border-2 border-ink bg-signal px-6 py-3 font-display text-lg text-paper shadow-[6px_6px_0_var(--color-ink)] transition hover:-translate-y-1 hover:shadow-[10px_10px_0_var(--color-ink)]"
+              className="mt-8 flex items-center justify-center gap-2 rounded-full bg-signal px-6 py-4 text-base font-bold text-white transition hover:bg-ink"
             >
               Buy it on Depop
-              <ArrowUpRight className="size-5 transition group-hover:rotate-45" />
+              <ArrowUpRight className="size-5" />
             </a>
           )}
-          <p className="mt-4 text-center font-mono text-xs uppercase tracking-widest text-ink/60">
+          <p className="mt-3 text-center text-xs text-muted">
             Secure checkout & buyer protection through Depop
           </p>
         </div>
       </div>
 
       {related.length > 0 && (
-        <section className="mt-28">
+        <section className="mt-20">
           <h2 className="font-display text-3xl">Also in Urban Closet</h2>
-          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-7 sm:gap-x-4 lg:grid-cols-4">
             {related.map((p) => (
-              <ProductCard key={p.id} product={p} index={products.indexOf(p)} />
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </section>
