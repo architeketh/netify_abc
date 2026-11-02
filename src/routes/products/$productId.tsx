@@ -86,7 +86,7 @@ function ProductPage() {
                 : undefined
             }
           />
-          {product.tag && (
+          {product.tag && product.tag !== 'Hero' && (
             <span className="absolute left-4 top-4 -rotate-3 border-2 border-ink bg-volt px-3 py-1 font-mono text-xs font-bold uppercase">
               {product.tag}
             </span>
