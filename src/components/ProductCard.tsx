@@ -37,7 +37,7 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
             loading="lazy"
             className={`h-full w-full object-cover transition duration-500 group-hover:scale-105 ${product.sold ? 'grayscale' : ''}`}
           />
-          {product.tag && !product.sold && (
+          {product.tag && product.tag !== 'Hero' && !product.sold && (
             <span className="absolute left-2 top-2 -rotate-3 border-2 border-ink bg-volt px-2 py-0.5 font-mono text-[11px] font-bold uppercase">
               {product.tag}
             </span>
