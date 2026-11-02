@@ -39,9 +39,9 @@ export function DropAlertForm() {
 
   if (state === 'success') {
     return (
-      <div className="border-2 border-paper bg-volt p-8 text-ink" role="status">
+      <div className="rounded-2xl bg-volt p-8 text-ink" role="status">
         <Check className="size-10" />
-        <p className="font-display mt-4 text-5xl">You're on the list.</p>
+        <p className="font-display mt-4 text-4xl">You're on the list.</p>
         <p className="mt-3 max-w-md">
           We'll give you a heads up when fresh pairs in your size land — before they hit the
           Depop feed.
@@ -51,7 +51,7 @@ export function DropAlertForm() {
   }
 
   const input =
-    'w-full border-2 border-paper bg-transparent px-4 py-3 text-paper placeholder:text-paper/40 focus:border-signal focus:outline-none'
+    'w-full h-12 rounded-xl border border-[#6f6a64] bg-[#1f1b18] px-4 text-[15px] font-medium text-white placeholder:text-white/40 focus:border-white focus:outline-none'
 
   return (
     <form
@@ -77,7 +77,7 @@ export function DropAlertForm() {
       <fieldset disabled={state === 'pending'} className="space-y-5">
         <div className="grid gap-5 sm:grid-cols-[1fr_9rem]">
           <label className="block">
-            <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-paper/70">
+            <span className="mb-2 block text-[13px] font-bold text-[#e6e0d8]">
               Email
             </span>
             <input
@@ -91,7 +91,7 @@ export function DropAlertForm() {
             />
           </label>
           <label className="block">
-            <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-paper/70">
+            <span className="mb-2 block text-[13px] font-bold text-[#e6e0d8]">
               US size
             </span>
             <select name="size" defaultValue="" required className={`${input} appearance-none`}>
@@ -108,7 +108,7 @@ export function DropAlertForm() {
         </div>
 
         <div>
-          <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-paper/70">
+          <span className="mb-2 block text-[13px] font-bold text-[#e6e0d8]">
             Brands you're hunting
           </span>
           <div className="flex flex-wrap gap-2">
@@ -120,8 +120,8 @@ export function DropAlertForm() {
                   type="button"
                   aria-pressed={on}
                   onClick={() => toggleBrand(brand)}
-                  className={`rounded-full border-2 px-4 py-1.5 text-sm font-bold uppercase transition ${
-                    on ? 'border-signal bg-signal text-paper' : 'border-paper/60 hover:border-paper'
+                  className={`rounded-full border px-3.5 py-1.5 text-[13px] font-medium transition ${
+                    on ? 'border-white bg-white text-ink' : 'border-[#6f6a64] text-white hover:border-white'
                   }`}
                 >
                   {brand}
@@ -132,7 +132,7 @@ export function DropAlertForm() {
         </div>
 
         <label className="block">
-          <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-paper/70">
+          <span className="mb-2 block text-[13px] font-bold text-[#e6e0d8]">
             Your grail (optional)
           </span>
           <textarea
@@ -140,13 +140,13 @@ export function DropAlertForm() {
             rows={3}
             maxLength={1000}
             placeholder="That one pair you had in '96 and never stopped thinking about…"
-            className={input}
+            className={`${input} !h-auto py-3`}
           />
         </label>
 
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 border-2 border-paper bg-signal px-6 py-4 font-display text-2xl text-paper transition hover:bg-paper hover:text-ink disabled:cursor-wait"
+          className="flex h-[3.25rem] w-full items-center justify-center gap-2 rounded-full bg-signal px-6 text-base font-bold text-white transition hover:bg-white hover:text-ink disabled:cursor-wait"
         >
           {state === 'pending' ? (
             <>
@@ -158,7 +158,7 @@ export function DropAlertForm() {
         </button>
       </fieldset>
       {state === 'error' && (
-        <p role="alert" className="border-2 border-signal p-3 text-sm">
+        <p role="alert" className="rounded-xl border border-signal p-3 text-sm">
           That didn't go through — your details are still here, so give it another try in a
           moment.
         </p>

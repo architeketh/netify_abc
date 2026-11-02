@@ -1,6 +1,6 @@
 import { CONDITIONS, type Condition } from '@/data/products.ts'
 
-// 5 steps: Brand New fills all five, Used - Fair fills one.
+// Five steps: Brand New fills all five, Used - Fair fills one.
 export function ConditionMeter({
   condition,
   className = '',
@@ -13,17 +13,12 @@ export function ConditionMeter({
   const level = CONDITIONS.length - Math.max(0, CONDITIONS.indexOf(condition))
   return (
     <div className={className} role="img" aria-label={`Condition: ${condition}`}>
-      <div className="flex gap-0.5">
+      <div className="flex gap-1">
         {CONDITIONS.map((c, i) => (
-          <span
-            key={c}
-            className={`h-2 flex-1 border border-ink ${i < level ? 'bg-ink' : 'bg-transparent'}`}
-          />
+          <span key={c} className={`h-1.5 flex-1 rounded-full ${i < level ? 'bg-ink' : 'bg-line'}`} />
         ))}
       </div>
-      {showLabel && (
-        <p className="mt-1.5 font-mono text-[10px] uppercase tracking-widest text-ink/60">{condition}</p>
-      )}
+      {showLabel && <p className="mt-1.5 text-xs text-muted">{condition}</p>}
     </div>
   )
 }

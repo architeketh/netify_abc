@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
 
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
@@ -39,39 +38,27 @@ function useVisitorCount() {
 export function SiteFooter() {
   const visitors = useVisitorCount()
   return (
-    <footer className="mt-24 bg-ink text-paper">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-        <a
-          href={DEPOP_SHOP_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="group block"
-        >
-          <p className="font-mono text-xs uppercase tracking-widest text-paper/60">
-            Every find lives on Depop →
-          </p>
-          <p className="font-display mt-3 text-[7vw] transition group-hover:text-signal sm:text-7xl lg:text-8xl">
-            @abc_isfor_xyz
-          </p>
-        </a>
-        <div className="mt-10 flex flex-col justify-between gap-6 border-t border-paper/20 pt-6 font-mono text-xs uppercase tracking-widest text-paper/60 sm:flex-row">
+    <footer className="mt-20 border-t border-line">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-8 text-sm text-muted sm:px-8">
+        <div className="flex items-center gap-3">
+          <img src="/img/logo.png" alt="" width={30} height={30} className="size-[30px] rounded-full" />
           <p>
             © {new Date().getFullYear()} ABC is for XYZ — A–Z curated vintage + modern finds.
             {visitors !== null && (
-              <span className="ml-3 whitespace-nowrap text-paper/40">
+              <span className="ml-2 whitespace-nowrap text-muted/70">
                 · {visitors.toLocaleString('en-US')} visits
               </span>
             )}
           </p>
-          <a
-            href={DEPOP_SHOP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1 hover:text-signal"
-          >
-            depop.com/abc_isfor_xyz <ArrowUpRight className="size-3" />
-          </a>
         </div>
+        <a
+          href={DEPOP_SHOP_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="font-bold text-ink hover:text-signal"
+        >
+          depop.com/abc_isfor_xyz ↗
+        </a>
       </div>
     </footer>
   )

@@ -1,151 +1,153 @@
-import { useState, type MouseEvent } from 'react'
-import { Link, useLocation } from '@tanstack/react-router'
-import { ArrowUpRight, Menu, X } from 'lucide-react'
+import { useState, type FormEvent, type MouseEvent } from 'react'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
+import { ArrowUpRight, Menu, Search, X } from 'lucide-react'
+import { setSearchQuery, useSearchQuery } from '@/lib/search'
 
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
-// Small round mark in the colors of the ABC is for XYZ logo
-function LogoMark() {
-  return (
-    <svg viewBox="0 0 100 100" className="size-9 shrink-0" aria-hidden="true">
-      <defs>
-        <clipPath id="logo-circle">
-          <circle cx="50" cy="50" r="49" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#logo-circle)">
-        <rect x="0" y="0" width="27" height="40" fill="#8f4f1d" />
-        <rect x="27" y="0" width="24" height="40" fill="#ffd95a" />
-        <rect x="51" y="0" width="22" height="40" fill="#08bfe0" />
-        <rect x="73" y="0" width="27" height="40" fill="#476614" />
-        <rect x="0" y="60" width="27" height="40" fill="#08bfe0" />
-        <rect x="27" y="60" width="24" height="40" fill="#be8ae8" />
-        <rect x="51" y="60" width="22" height="40" fill="#e1502f" />
-        <rect x="73" y="60" width="27" height="40" fill="#8f4f1d" />
-        <rect x="0" y="40" width="100" height="20" fill="#fffaf0" />
-      </g>
-      <circle cx="50" cy="50" r="49" fill="none" stroke="#140d08" strokeWidth="2" />
-    </svg>
-  )
-}
+const LINKS = [
+  { label: 'Urban Closet', id: 'archive' },
+  { label: 'Grading', id: 'grading' },
+  { label: 'Drop Alerts', id: 'drops' },
+]
 
 export function SiteHeader() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const onHome = pathname === '/'
   const [open, setOpen] = useState(false)
+  const query = useSearchQuery()
 
   // On the home page, scroll to the top (or to a section) every time, even when the
-  // address already ends in that #section. On a shoe page, let the link go to the home page.
+  // address already ends in that #section. On a pair page, let the link go to the home page.
   const toTop = (e: MouseEvent) => {
+    setOpen(false)
     if (!onHome) return
     e.preventDefault()
     window.scrollTo({ top: 0, behavior: 'smooth' })
     window.history.replaceState(null, '', '/')
   }
-  const closeAnd = (fn: (e: MouseEvent) => void) => (e: MouseEvent) => {
-    setOpen(false)
-    fn(e)
-  }
   const toSection = (id: string) => (e: MouseEvent) => {
+    setOpen(false)
     if (!onHome) return
     e.preventDefault()
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     window.history.replaceState(null, '', `/#${id}`)
   }
+  const search = (e: FormEvent) => {
+    e.preventDefault()
+    if (onHome) document.getElementById('archive')?.scrollIntoView({ behavior: 'smooth' })
+    else navigate({ to: '/', hash: 'archive' })
+  }
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-ink bg-paper/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" onClick={toTop} className="group flex shrink-0 items-center gap-3">
-          <LogoMark />
-          <span className="flex items-baseline gap-1.5">
-            <span className="font-display text-2xl sm:text-3xl">ABC</span>
-            <span className="text-xs font-medium italic sm:text-sm">is for</span>
-            <span className="font-display text-2xl sm:text-3xl">XYZ</span>
-          </span>
-          <span className="hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-widest text-ink/60 min-[1500px]:inline">
-            A–Z curated vintage + modern finds • Built for repeat buyers
-          </span>
-        </Link>
-        <nav className="flex shrink-0 items-center gap-1 text-sm font-bold uppercase sm:gap-2">
-          <Link
-            to="/"
-            onClick={toTop}
-            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
-          >
-            Home
-          </Link>
-          <Link
-            to="/"
-            hash="archive"
-            onClick={toSection('archive')}
-            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper sm:block"
-          >
-            Urban Closet
-          </Link>
-          <Link
-            to="/"
-            hash="grading"
-            onClick={toSection('grading')}
-            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper md:block"
-          >
-            Grading
-          </Link>
-          <Link
-            to="/"
-            hash="drops"
-            onClick={toSection('drops')}
-            className="hidden whitespace-nowrap rounded-full px-3 py-2 hover:bg-ink hover:text-paper md:block"
-          >
-            Drop Alerts
-          </Link>
-          <a
-            href={DEPOP_SHOP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1 whitespace-nowrap rounded-full border-2 border-ink bg-signal px-3 py-2 text-xs text-paper sm:px-4 sm:text-sm shadow-[3px_3px_0_var(--color-ink)] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--color-ink)]"
-          >
-            Shop Depop <ArrowUpRight className="size-4" />
-          </a>
-          <button
-            type="button"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="grid size-11 place-items-center rounded-full border-2 border-ink md:hidden"
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </nav>
+    <>
+      <div className="border-b border-[#eee3c9] bg-cream px-3 py-2 text-center text-[12px] font-medium sm:text-[13px]">
+        Clear pricing + quick replies &nbsp;•&nbsp; Ships within 24 hrs from MN
       </div>
-      {open && (
-        <nav className="border-t-2 border-ink bg-paper md:hidden" aria-label="Menu">
-          {[
-            { label: 'Home', id: '' },
-            { label: 'Urban Closet', id: 'archive' },
-            { label: 'Grading', id: 'grading' },
-            { label: 'Drop Alerts', id: 'drops' },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              to="/"
-              hash={item.id || undefined}
-              onClick={closeAnd(item.id ? toSection(item.id) : toTop)}
-              className="font-display block border-b border-ink/20 px-6 py-4 text-2xl active:bg-paper-deep"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <a
-            href={DEPOP_SHOP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="font-display flex items-center justify-between bg-signal px-6 py-4 text-2xl text-paper"
+      <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3 sm:px-8">
+          <Link to="/" onClick={toTop} className="flex shrink-0 items-center gap-2.5">
+            <img src="/img/logo.png" alt="" width={38} height={38} className="size-[38px] rounded-full" />
+            <span className="flex items-baseline gap-1.5 whitespace-nowrap">
+              <span className="font-display text-2xl">ABC</span>
+              <span className="text-sm font-medium italic">is for</span>
+              <span className="font-display text-2xl">XYZ</span>
+            </span>
+          </Link>
+
+          <form
+            role="search"
+            onSubmit={search}
+            className="relative order-last w-full md:order-none md:max-w-xl md:flex-1"
           >
-            Shop on Depop <ArrowUpRight className="size-6" />
-          </a>
-        </nav>
-      )}
-    </header>
+            <label className="sr-only" htmlFor="shop-search">
+              Search the shop
+            </label>
+            <Search className="pointer-events-none absolute left-4 top-1/2 size-[18px] -translate-y-1/2 text-muted" />
+            <input
+              id="shop-search"
+              type="search"
+              value={query}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search sneakers, boots, bags, clothing"
+              className="h-11 w-full rounded-full border border-line bg-soft pl-11 pr-4 text-[15px] font-medium focus:border-ink focus:outline-none"
+            />
+          </form>
+
+          <nav className="ml-auto hidden items-center gap-1 text-[15px] font-medium md:flex lg:gap-3">
+            <Link to="/" onClick={toTop} className="whitespace-nowrap rounded-full px-3 py-2 hover:bg-soft">
+              Home
+            </Link>
+            {LINKS.map((l) => (
+              <Link
+                key={l.id}
+                to="/"
+                hash={l.id}
+                onClick={toSection(l.id)}
+                className="whitespace-nowrap rounded-full px-3 py-2 hover:bg-soft"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href={DEPOP_SHOP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-2 whitespace-nowrap rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-white hover:bg-signal"
+            >
+              Shop on Depop ↗
+            </a>
+          </nav>
+
+          <div className="ml-auto flex items-center gap-2 md:hidden">
+            <a
+              href={DEPOP_SHOP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="whitespace-nowrap rounded-full bg-ink px-4 py-2.5 text-xs font-bold text-white"
+            >
+              Shop Depop ↗
+            </a>
+            <button
+              type="button"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="grid size-11 place-items-center rounded-full border border-line"
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
+        </div>
+
+        {open && (
+          <nav className="border-t border-line bg-white md:hidden" aria-label="Menu">
+            <Link to="/" onClick={toTop} className="block border-b border-line px-6 py-4 text-lg font-bold">
+              Home
+            </Link>
+            {LINKS.map((l) => (
+              <Link
+                key={l.id}
+                to="/"
+                hash={l.id}
+                onClick={toSection(l.id)}
+                className="block border-b border-line px-6 py-4 text-lg font-bold"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href={DEPOP_SHOP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-between bg-ink px-6 py-4 text-lg font-bold text-white"
+            >
+              Shop on Depop <ArrowUpRight className="size-5" />
+            </a>
+          </nav>
+        )}
+      </header>
+    </>
   )
 }
