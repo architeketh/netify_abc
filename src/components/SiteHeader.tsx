@@ -6,7 +6,7 @@ import { setSearchQuery, useSearchQuery } from '@/lib/search'
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
 const LINKS = [
-  { label: 'Urban Closet', id: 'archive' },
+  { label: 'Closet', id: 'archive' },
   { label: 'Grading', id: 'grading' },
   { label: 'Drop Alerts', id: 'drops' },
 ]
