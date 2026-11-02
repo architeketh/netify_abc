@@ -53,7 +53,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfoa_xyz-9m-new-adidas-daily-30-f66f/',
-    tag: 'Grail',
+    tag: 'Just In',
   },
   {
     id: '85m-new-adidas-daily-30-d9a5',
@@ -739,6 +739,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_syz-65y-8w-new-nike-court-7295/',
+    tag: 'Just In',
   },
   {
     id: '6w-new-nike-revolution-7-95ed',
@@ -2066,6 +2067,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xyz-new-in-box-pink-jordan-47d9/',
+    tag: 'Hot',
   },
   {
     id: '4y-55w-new-nike-jordan-0b55',
@@ -2134,6 +2136,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfpr_xyz-7y-85w-rare-vtg-air-a602/',
+    tag: 'Rare',
   },
   {
     id: '5y-65w-nike-dunk-lo-5b1c',
@@ -6687,7 +6690,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/a5c_isfor_xyz-l-darc-sport-black-wolves-839c/',
-    tag: 'Hero',
+    tag: 'Just In',
   },
   {
     id: 'hobo-international-y2k-black-leather-63c1',
