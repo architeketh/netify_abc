@@ -6669,6 +6669,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xyo-l-darc-sport-wolves-the-c056/',
+    tag: 'Just In',
   },
   {
     id: 'l-darc-sport-black-wolves-839c',
@@ -6686,6 +6687,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/a5c_isfor_xyz-l-darc-sport-black-wolves-839c/',
+    tag: 'Hero',
   },
   {
     id: 'hobo-international-y2k-black-leather-63c1',
