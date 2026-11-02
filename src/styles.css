@@ -2,10 +2,14 @@
 
 @theme {
   /* Colors taken from the ABC is for XYZ logo */
-  --color-paper: #fff8ea; /* cream band behind "is for" */
-  --color-paper-deep: #f8e8bd; /* soft yellow */
+  --color-paper: #ffffff; /* clean white page */
+  --color-paper-deep: #f5f3f0; /* soft gray behind photos */
+  --color-cream: #fff8ea; /* cream band from the logo */
+  --color-soft: #f5f3f0; /* light gray fills */
+  --color-line: #e6e3df; /* thin borders */
+  --color-muted: #5c5855; /* secondary text */
   --color-ink: #140d08; /* logo lettering */
-  --color-signal: #e1502f; /* logo red-orange */
+  --color-signal: #c8401f; /* logo red-orange, darkened so white text stays readable */
   --color-volt: #ffd95a; /* logo yellow */
   --color-sole: #08bfe0; /* logo cyan */
   --color-olive: #476614; /* logo olive green */
@@ -22,21 +26,10 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-paper);
+  background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-}
-
-/* Very light paper texture */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 60;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
 ::selection {
@@ -46,8 +39,7 @@ body::after {
 
 .font-display {
   letter-spacing: 0;
-  line-height: 0.95;
-  text-transform: uppercase;
+  line-height: 1.05;
   font-weight: 400;
 }
 
