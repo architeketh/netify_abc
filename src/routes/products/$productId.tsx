@@ -38,7 +38,7 @@ export const Route = createFileRoute('/products/$productId')({
         hash="archive"
         className="mt-8 inline-block rounded-full bg-ink px-6 py-3 font-bold text-white hover:bg-signal"
       >
-        Back to Urban Closet
+        Back to the closet
       </Link>
     </div>
   ),
@@ -62,7 +62,7 @@ function ProductPage() {
         hash="archive"
         className="inline-flex items-center gap-2 text-sm font-bold hover:text-signal"
       >
-        <ArrowLeft className="size-4" /> Back to Urban Closet
+        <ArrowLeft className="size-4" /> Back to the closet
       </Link>
 
       <div className="mt-5 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
@@ -168,7 +168,7 @@ function ProductPage() {
 
       {related.length > 0 && (
         <section className="mt-20">
-          <h2 className="font-display text-3xl">Also in Urban Closet</h2>
+          <h2 className="font-display text-3xl">Also in the closet</h2>
           <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-7 sm:gap-x-4 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} />
