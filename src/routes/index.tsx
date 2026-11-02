@@ -175,7 +175,8 @@ function Home() {
                 alt="ABC is for XYZ logo"
                 width={480}
                 height={480}
-                className="spin-record absolute left-1/2 top-1/2 size-60 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg"
+                className="spin-slow absolute left-1/2 top-1/2 size-60 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg"
+                style={{ animationDuration: '5s' }}
               />
               <div className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d8d2c8] ring-1 ring-[#8a8279]" />
               <div className="absolute right-[18px] top-[18px] size-9 rounded-full bg-[#4a433c] ring-2 ring-[#6b6259]" />
