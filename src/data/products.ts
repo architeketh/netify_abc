@@ -71,6 +71,7 @@ const products: Array<Product> = [
       '',
     details: [],
     depopUrl: 'https://www.depop.com/products/abc_isfor_xyy-l-darc-sport-in-gods-d20c/',
+    sold: true,
     tag: 'Just In',
   },
   {
