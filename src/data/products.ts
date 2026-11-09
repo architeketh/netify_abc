@@ -6675,23 +6675,6 @@ const products: Array<Product> = [
     depopUrl: 'https://www.depop.com/products/archited-cushionaire-hippy-cozy-platform-b303/',
   },
   {
-    id: 'timberland-pro-a91160-sawhorse-work-6d22',
-    name: 'Timberland Pro A91160',
-    colorway: '',
-    brand: 'Timberland',
-    year: '1990',
-    category: 'Boots',
-    size: '7.5',
-    sizeType: 'Men',
-    condition: 'Used - Excellent',
-    price: 31.78,
-    image: 'https://media-photos.depop.com/b1/463666447/5060406438_fb85294fc2664834b3be15498edbc313/P1.jpg',
-    description:
-      '',
-    details: [],
-    depopUrl: 'https://www.depop.com/products/arczitek-timberland-pro-a91160-sawhorse-work-6d22/',
-  },
-  {
     id: 'ugg-kids-canoe-waterproof-1105181k-49fd',
     name: 'UGG Kids Canoe Waterproof 1105181K Size 6Y',
     colorway: '',
