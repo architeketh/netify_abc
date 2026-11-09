@@ -70,7 +70,7 @@ export function SiteHeader() {
               type="search"
               value={query}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search sneakers, boots, bags, clothing"
+              placeholder="Search shoes, boots, bags, clothing, accessories"
               className="h-11 w-full rounded-full border border-line bg-soft pl-11 pr-4 text-[15px] font-medium focus:border-ink focus:outline-none"
             />
           </form>
