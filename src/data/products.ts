@@ -6855,7 +6855,7 @@ const products: Array<Product> = [
     size: '8',
     sizeType: 'Men',
     condition: 'Brand New',
-    price: 34.58,
+    price: 53.2,
     image: 'https://media-photos.depop.com/b1/463666447/5146991902_146bc092142540b89f23825423bebcfe/P1.jpg',
     description:
       '',
