@@ -13,14 +13,23 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 
-// What kind of item it is. Shoes use the category set in the manage page; Bags and Clothing have their own.
-type Kind = 'Sneakers' | 'Boots' | 'Bags' | 'Clothing'
-const KINDS: Array<Kind> = ['Sneakers', 'Boots', 'Bags', 'Clothing']
+// What kind of item it is. Shoes use the category set in the manage page; Bags, Clothing and Accessories have their own.
+type Kind = 'Sneakers' | 'Boots' | 'Bags' | 'Clothing' | 'Accessories'
+const KINDS: Array<Kind> = ['Sneakers', 'Boots', 'Bags', 'Clothing', 'Accessories']
+const KIND_LABEL: Record<Kind, string> = {
+  Sneakers: 'Shoes',
+  Boots: 'Boots',
+  Bags: 'Bags',
+  Clothing: 'Clothing',
+  Accessories: 'Accessories & Collectibles',
+}
 const LETTER_SIZE = /^(xxs|xs|s|m|l|xl|xxl|xxxl|one size|os|small|medium|large)$/i
 const SHOE_WORDS =
   /shoe|sneaker|boot|loafer|sandal|heel|pump|oxford|slide|clog|trainer|cleat|slipper|mule|dunk|jordan|air max|air force|gazelle|samba|chuck taylor|yeezy/
 const BAG_WORDS =
   /(?<!dust )(?<!shoe )(?<!shoes )\b(?:bag|purse|handbag|tote|crossbody|cross body|clutch|satchel|backpack|wallet|pouch|duffle|duffel|hobo|baguette|wristlet|messenger|luggage|suitcase|fanny pack|belt bag)\b/
+const ACCESSORY_WORDS =
+  /\b(?:jewel(?:ry|lery)|necklaces?|bracelets?|earrings?|pendants?|brooch(?:es)?|anklets?|charms?|rings?|watch(?:es)?|hats?|caps?(?! toe)|beanies?|visors?|scarf|scarves|bandanas?|gloves?|mittens?|belts?|sunglasses|glasses|keychains?|key chains?|lanyards?|statues?|figurines?|figures?|sculptures?|collectibles?|collectables?|ornaments?|decor|vases?|mugs?|candles?|posters?|paintings?|plush|toys?|dolls?|snow globes?|trinkets?|magnets?|stickers?|patch(?:es)?|pins?)\b/
 const CLOTHING_WORDS =
   /\b(?:shirt|t-shirt|tee|hoodie|sweatshirt|crewneck|jacket|coat|parka|puffer|bomber|anorak|windbreaker|fleece|pullover|quarter zip|henley|flannel|jeans|pants|trousers|slacks|chinos|cargo|joggers|sweatpants|leggings|tights|shorts|skirt|skort|dress|romper|jumpsuit|overalls|bodysuit|blouse|sweater|cardigan|vest|jersey|tracksuit|sweatsuit|blazer|beanie|scarf|gloves|bra|swimsuit|bikini|pajamas|robe|tank top|crop top)\b/
 const kindOf = (p: Product): Kind => {
@@ -31,13 +40,14 @@ const kindOf = (p: Product): Kind => {
   if (category === 'Boots') return 'Boots'
   if (category === 'Bags') return 'Bags'
   if (category === 'Clothing') return 'Clothing'
-  // Items left on a shoe category: clothing and bags are spotted by their size and their name
-  if (LETTER_SIZE.test(p.size.trim())) return 'Clothing'
+  if (category === 'Accessories') return 'Accessories'
+  // Items left on a shoe category: bags, accessories and clothing are spotted by their name and size
   const name = p.name.toLowerCase()
-  if (!SHOE_WORDS.test(name)) {
-    if (BAG_WORDS.test(name)) return 'Bags'
-    if (CLOTHING_WORDS.test(name)) return 'Clothing'
-  }
+  const notShoe = !SHOE_WORDS.test(name)
+  if (notShoe && BAG_WORDS.test(name)) return 'Bags'
+  if (notShoe && ACCESSORY_WORDS.test(name)) return 'Accessories'
+  if (LETTER_SIZE.test(p.size.trim())) return 'Clothing'
+  if (notShoe && CLOTHING_WORDS.test(name)) return 'Clothing'
   return 'Sneakers'
 }
 
@@ -78,7 +88,7 @@ function Home() {
         id: b as Brand,
         label: b as string,
         count: inKind.filter((p) => p.brand === b && (showSold || !p.sold)).length,
-      })).filter((b) => b.count > 0 && !(kind === 'Sneakers' && b.id === 'Other')),
+      })).filter((b) => b.count > 0),
     [inKind, showSold, kind],
   )
   // One entry per size and who it is for, e.g. M 9, W 9, Kids 12
@@ -143,7 +153,7 @@ function Home() {
               A to Z.
             </h1>
             <p className="mt-4 max-w-[30rem] text-base leading-relaxed text-[#3b3632] sm:text-lg">
-              Sneakers, boots, bags and clothing — cleaned, graded and honest about every crease.
+              Shoes, boots, bags, clothing and accessories — cleaned, graded and honest about every crease.
               One of one, so when it's gone, it's gone.
             </p>
             <div className="mt-6 flex gap-2 sm:gap-3">
@@ -222,7 +232,7 @@ function Home() {
           <div className="flex flex-wrap gap-2.5" role="group" aria-label="Filter by type">
             {[
               { id: 'all' as const, label: 'Everything', count: kindCounts.reduce((n, k) => n + k.count, 0) },
-              ...kindCounts.map((k) => ({ id: k.id, label: k.id as string, count: k.count })),
+              ...kindCounts.map((k) => ({ id: k.id, label: KIND_LABEL[k.id], count: k.count })),
             ].map((k) => (
               <button
                 key={k.id}
