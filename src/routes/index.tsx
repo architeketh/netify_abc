@@ -9,15 +9,6 @@ import { useSearchQuery } from '@/lib/search'
 
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
-// Links to the category pages (/shoes, /boots, ...)
-const CATEGORY_PAGES = [
-  { href: '/shoes', label: 'Shoes' },
-  { href: '/boots', label: 'Boots' },
-  { href: '/bags', label: 'Bags' },
-  { href: '/clothing', label: 'Clothing' },
-  { href: '/accessories', label: 'Accessories & Collectibles' },
-]
-
 export const Route = createFileRoute('/')({
   component: Home,
 })
@@ -31,6 +22,14 @@ const KIND_LABEL: Record<Kind, string> = {
   Bags: 'Bags',
   Clothing: 'Clothing',
   Accessories: 'Accessories & Collectibles',
+}
+// Each type also has its own page (good for Google). The chips below are real links to these.
+const KIND_PATH: Record<Kind, string> = {
+  Sneakers: '/shoes',
+  Boots: '/boots',
+  Bags: '/bags',
+  Clothing: '/clothing',
+  Accessories: '/accessories',
 }
 const LETTER_SIZE = /^(xxs|xs|s|m|l|xl|xxl|xxxl|one size|os|small|medium|large)$/i
 const SHOE_WORDS =
@@ -207,22 +206,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Shop by category: links to the category pages */}
-      <nav aria-label="Shop by category" className="mx-auto max-w-7xl px-4 pt-6 sm:px-8">
-        <div className="flex flex-wrap items-center gap-2.5">
-          <span className="text-sm font-bold">Shop by category:</span>
-          {CATEGORY_PAGES.map((c) => (
-            <a
-              key={c.href}
-              href={c.href}
-              className="flex min-h-10 items-center rounded-full border-[1.5px] border-ink bg-white px-4 text-sm font-bold transition hover:bg-soft"
-            >
-              {c.label}
-            </a>
-          ))}
-        </div>
-      </nav>
-
       {/* Closet (the shop list) */}
       <section id="archive" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-10 sm:px-8 sm:pt-12">
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
@@ -259,11 +242,14 @@ function Home() {
               { id: 'all' as const, label: 'Everything', count: kindCounts.reduce((n, k) => n + k.count, 0) },
               ...kindCounts.map((k) => ({ id: k.id, label: KIND_LABEL[k.id], count: k.count })),
             ].map((k) => (
-              <button
+              <a
                 key={k.id}
-                type="button"
-                aria-pressed={kind === k.id}
-                onClick={() => {
+                href={k.id === 'all' ? '/#archive' : KIND_PATH[k.id]}
+                aria-current={kind === k.id ? 'true' : undefined}
+                onClick={(e) => {
+                  // Normal tap = instant filter right here. Ctrl/Cmd/middle-click still opens the page.
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+                  e.preventDefault()
                   setKind(k.id)
                   setBrand('all')
                   setSize('all')
@@ -271,7 +257,7 @@ function Home() {
                 className={chip(kind === k.id)}
               >
                 {k.label} <span className="font-medium opacity-70">{k.count}</span>
-              </button>
+              </a>
             ))}
           </div>
           <div className="flex flex-wrap items-center gap-2.5 md:ml-auto">
@@ -299,7 +285,8 @@ function Home() {
           </div>
         </div>
 
-        {/* Brand chips */}
+        {/* Brand chips (only shown when there is more than one brand to pick from) */}
+        {brandFilters.length > 1 && (
         <div className="mt-3.5 flex flex-wrap gap-2" role="group" aria-label="Filter by brand">
           {[{ id: 'all' as const, label: 'All brands' }, ...brandFilters].map((b) => (
             <button
@@ -317,6 +304,7 @@ function Home() {
             </button>
           ))}
         </div>
+        )}
         <label className="mt-3.5 flex cursor-pointer items-center gap-2 text-[13px] text-muted">
           <input
             type="checkbox"
