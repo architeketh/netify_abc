@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import products, { BRANDS, CONDITIONS, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
@@ -24,7 +24,7 @@ const KIND_LABEL: Record<Kind, string> = {
   Accessories: 'Accessories & Collectibles',
 }
 // Each type also has its own page (good for Google). The chips below are real links to these.
-const KIND_PATH: Record<Kind, string> = {
+const KIND_PATH: Record<Kind, '/shoes' | '/boots' | '/bags' | '/clothing' | '/accessories'> = {
   Sneakers: '/shoes',
   Boots: '/boots',
   Bags: '/bags',
@@ -67,7 +67,6 @@ const PAGE_SIZE = 24
 const sizeKey = (p: Product) => `${p.sizeType}|${p.size}`
 
 function Home() {
-  const [kind, setKind] = useState<Kind | 'all'>('all')
   const [brand, setBrand] = useState<Brand | 'all'>('all')
   const [size, setSize] = useState('all')
   const [sort, setSort] = useState<Sort>('featured')
@@ -75,12 +74,10 @@ function Home() {
   const [limit, setLimit] = useState(PAGE_SIZE)
   const query = useSearchQuery().trim().toLowerCase()
   // Start from the first batch again whenever a filter changes
-  useEffect(() => setLimit(PAGE_SIZE), [kind, brand, size, sort, showSold, query])
+  useEffect(() => setLimit(PAGE_SIZE), [brand, size, sort, showSold, query])
 
-  const inKind = useMemo(
-    () => products.filter((p) => kind === 'all' || kindOf(p) === kind),
-    [kind],
-  )
+  // The homepage always shows everything; each type has its own page (see the chips below)
+  const inKind = products
   const kindCounts = useMemo(
     () =>
       KINDS.map((k) => ({
@@ -97,7 +94,7 @@ function Home() {
         label: b as string,
         count: inKind.filter((p) => p.brand === b && (showSold || !p.sold)).length,
       })).filter((b) => b.count > 0),
-    [inKind, showSold, kind],
+    [inKind, showSold],
   )
   // One entry per size and who it is for, e.g. M 9, W 9, Kids 12
   const sizes = useMemo(() => {
@@ -242,22 +239,15 @@ function Home() {
               { id: 'all' as const, label: 'Everything', count: kindCounts.reduce((n, k) => n + k.count, 0) },
               ...kindCounts.map((k) => ({ id: k.id, label: KIND_LABEL[k.id], count: k.count })),
             ].map((k) => (
-              <a
-                key={k.id}
-                href={k.id === 'all' ? '/#archive' : KIND_PATH[k.id]}
-                aria-current={kind === k.id ? 'true' : undefined}
-                onClick={(e) => {
-                  // Normal tap = instant filter right here. Ctrl/Cmd/middle-click still opens the page.
-                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
-                  e.preventDefault()
-                  setKind(k.id)
-                  setBrand('all')
-                  setSize('all')
-                }}
-                className={chip(kind === k.id)}
-              >
-                {k.label} <span className="font-medium opacity-70">{k.count}</span>
-              </a>
+              k.id === 'all' ? (
+                <Link key={k.id} to="/" hash="archive" className={chip(true)}>
+                  {k.label} <span className="font-medium opacity-70">{k.count}</span>
+                </Link>
+              ) : (
+                <Link key={k.id} to={KIND_PATH[k.id]} className={chip(false)}>
+                  {k.label} <span className="font-medium opacity-70">{k.count}</span>
+                </Link>
+              )
             ))}
           </div>
           <div className="flex flex-wrap items-center gap-2.5 md:ml-auto">
