@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from '@tanstack/react-router'
 import { ArrowUpRight } from 'lucide-react'
 import products, { BRANDS, CONDITIONS, SIZE_TYPES, type Brand, type Product } from '@/data/products.ts'
 import { ProductCard } from '@/components/ProductCard'
@@ -14,7 +15,11 @@ type Sort = 'featured' | 'just-in' | 'price-asc' | 'price-desc' | 'condition'
 const sizeKey = (p: Product) => `${p.sizeType}|${p.size}`
 
 // The one set of category chips (same look as the homepage closet)
-const CATEGORIES: Array<{ href: string; label: string; kind: Kind }> = [
+const CATEGORIES: Array<{
+  href: '/shoes' | '/boots' | '/bags' | '/clothing' | '/accessories'
+  label: string
+  kind: Kind
+}> = [
   { href: '/shoes', label: 'Shoes', kind: 'Sneakers' },
   { href: '/boots', label: 'Boots', kind: 'Boots' },
   { href: '/bags', label: 'Bags', kind: 'Bags' },
@@ -116,9 +121,9 @@ export function CategoryPage({
     <section className="mx-auto max-w-7xl px-4 pt-8 sm:px-8 sm:pt-10">
       {/* Heading + one short intro */}
       <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#6b4a1c]">
-        <a href="/" className="hover:underline">
+        <Link to="/" className="hover:underline">
           ABC is for XYZ
-        </a>
+        </Link>
       </p>
       <h1 className="font-display mt-2 text-4xl sm:text-[2.5rem]">{heading}</h1>
       <p className="mt-2 max-w-2xl text-base leading-relaxed text-[#3b3632]">{intro}</p>
@@ -126,13 +131,13 @@ export function CategoryPage({
       {/* One row of category chips + size and sort */}
       <div className="mt-6 flex flex-wrap items-center gap-2.5">
         <div className="flex flex-wrap gap-2.5" aria-label="Browse by category">
-          <a href="/#archive" className={chip(false)}>
+          <Link to="/" hash="archive" className={chip(false)}>
             Everything
-          </a>
+          </Link>
           {CATEGORIES.map((c) => (
-            <a key={c.href} href={c.href} aria-current={c.href === path ? 'page' : undefined} className={chip(c.href === path)}>
+            <Link key={c.href} to={c.href} aria-current={c.href === path ? 'page' : undefined} className={chip(c.href === path)}>
               {c.label} <span className="font-medium opacity-70">{counts[c.kind] ?? 0}</span>
-            </a>
+            </Link>
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-2.5 md:ml-auto">
