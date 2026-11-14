@@ -9,6 +9,15 @@ import { useSearchQuery } from '@/lib/search'
 
 const DEPOP_SHOP_URL = 'https://www.depop.com/abc_isfor_xyz/'
 
+// Links to the category pages (/shoes, /boots, ...)
+const CATEGORY_PAGES = [
+  { href: '/shoes', label: 'Shoes' },
+  { href: '/boots', label: 'Boots' },
+  { href: '/bags', label: 'Bags' },
+  { href: '/clothing', label: 'Clothing' },
+  { href: '/accessories', label: 'Accessories & Collectibles' },
+]
+
 export const Route = createFileRoute('/')({
   component: Home,
 })
@@ -197,6 +206,22 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Shop by category: links to the category pages */}
+      <nav aria-label="Shop by category" className="mx-auto max-w-7xl px-4 pt-6 sm:px-8">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="text-sm font-bold">Shop by category:</span>
+          {CATEGORY_PAGES.map((c) => (
+            <a
+              key={c.href}
+              href={c.href}
+              className="flex min-h-10 items-center rounded-full border-[1.5px] border-ink bg-white px-4 text-sm font-bold transition hover:bg-soft"
+            >
+              {c.label}
+            </a>
+          ))}
+        </div>
+      </nav>
 
       {/* Closet (the shop list) */}
       <section id="archive" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-10 sm:px-8 sm:pt-12">
